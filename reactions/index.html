@@ -52,6 +52,52 @@
     outline-offset: 1px;
   }
 
+  .view-switcher {
+    position: fixed;
+    top: 84px;
+    left: 16px;
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 4px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.10);
+    border-radius: 10px;
+  }
+
+  .view-switch {
+    width: 92px;
+    height: 34px;
+    padding: 0 10px;
+    color: #595959;
+    background: transparent;
+    border: 0;
+    border-radius: 7px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .view-switch:hover {
+    background: #F4F4F4;
+  }
+
+  .view-switch.is-active {
+    color: #fff;
+    background: #0B5DD7;
+  }
+
+  .view-switch:focus-visible {
+    outline: 3px solid #418AF4;
+    outline-offset: 1px;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
   /* Карточка */
   .post-card {
     width: 640px;
@@ -407,12 +453,18 @@
     body {
       flex-direction: column;
       align-items: center;
+      padding-top: 124px;
+    }
+
+    .view-switcher {
+      top: 68px;
+      flex-direction: row;
     }
   }
 
   /* Адаптив */
   @media (max-width: 640px) {
-    body { padding: 60px 0 0; }
+    body { padding: 116px 0 0; }
     .site-header { padding: 0 16px; }
     .post-card { border-radius: 0; }
     .post-content {
@@ -425,7 +477,7 @@
   /* Темная тема */
 
   /* Плавные переходы */
-  body, .site-header, .site-logo, .post-card, .post-title, .author-name, .author-time, .author-section,
+  body, .site-header, .site-logo, .view-switcher, .view-switch, .post-card, .post-title, .author-name, .author-time, .author-section,
   .btn-subscribe, .reaction-inactive, .reaction-add, .action-btn, .action-right,
   .post-content, .reaction-panel {
     transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
@@ -434,8 +486,13 @@
   /* Страница и карточка */
   [data-theme="dark"] body,
   [data-theme="dark"] .site-header,
+  [data-theme="dark"] .view-switcher,
   [data-theme="dark"] .post-card,
   [data-theme="dark"] .reaction-panel { background: #000000; }
+  [data-theme="dark"] .view-switcher { border-color: #2E2E2E; }
+  [data-theme="dark"] .view-switch { color: #969C9D; }
+  [data-theme="dark"] .view-switch:hover { background: #333333; }
+  [data-theme="dark"] .view-switch.is-active { color: #FFFFFF; background: #418AF4; }
   [data-theme="dark"] .site-logo,
   [data-theme="dark"] .author-name,
   [data-theme="dark"] .author-section,
@@ -464,7 +521,7 @@
   [data-theme="dark"] .action-right svg path { fill: #969C9D; }
 
   @media (prefers-reduced-motion: reduce) {
-    body, .site-header, .site-logo, .post-card, .post-title, .author-name, .author-time, .author-section,
+    body, .site-header, .site-logo, .view-switcher, .view-switch, .post-card, .post-title, .author-name, .author-time, .author-section,
     .btn-subscribe, .reaction-inactive, .reaction-add, .action-btn, .action-right,
     .post-content, .reaction-panel {
       transition: none;
@@ -488,6 +545,11 @@
     </svg>
   </button>
 </header>
+
+<nav class="view-switcher" aria-label="Отображаемый раздел">
+  <button class="view-switch is-active" type="button" data-view="post" aria-pressed="true">Пост</button>
+  <button class="view-switch" type="button" data-view="reactions" aria-pressed="false">Реакции</button>
+</nav>
 
 <div class="post-card">
   <div class="post-inner">
@@ -615,15 +677,16 @@
 
 
 
-<aside class="reaction-panel" id="reaction-panel" aria-label="Все реакции"></aside>
+<aside class="reaction-panel" id="reaction-panel" aria-label="Все реакции" hidden></aside>
 
 <script>
   const webpReactions = [{"name":"alien","count":49,"src":"webp/alien.webp"},{"name":"biceps","count":86,"src":"webp/biceps.webp"},{"name":"bomb","count":26,"src":"webp/bomb.webp"},{"name":"call_me_hand","count":63,"src":"webp/call_me_hand.webp"},{"name":"cold","count":3,"src":"webp/cold.webp"},{"name":"crazy","count":40,"src":"webp/crazy.webp"},{"name":"crossed","count":77,"src":"webp/crossed.webp"},{"name":"crying","count":17,"src":"webp/crying.webp"},{"name":"devil","count":54,"src":"webp/devil.webp"},{"name":"devil2","count":91,"src":"webp/devil2.webp"},{"name":"dizzy","count":31,"src":"webp/dizzy.webp"},{"name":"explosion","count":68,"src":"webp/explosion.webp"},{"name":"eyebrow","count":8,"src":"webp/eyebrow.webp"},{"name":"facepalm","count":45,"src":"webp/facepalm.webp"},{"name":"fingers","count":82,"src":"webp/fingers.webp"},{"name":"fist","count":22,"src":"webp/fist.webp"},{"name":"ghost","count":59,"src":"webp/ghost.webp"},{"name":"grimacing","count":96,"src":"webp/grimacing.webp"},{"name":"Gun","count":36,"src":"webp/Gun.webp"},{"name":"halo","count":73,"src":"webp/halo.webp"},{"name":"heal","count":13,"src":"webp/heal.webp"},{"name":"heart_eyes","count":50,"src":"webp/heart_eyes.webp"},{"name":"hugging","count":87,"src":"webp/hugging.webp"},{"name":"hushed","count":27,"src":"webp/hushed.webp"},{"name":"invader","count":64,"src":"webp/invader.webp"},{"name":"Kissing","count":4,"src":"webp/Kissing.webp"},{"name":"laugh","count":41,"src":"webp/laugh.webp"},{"name":"magic_wand","count":78,"src":"webp/magic_wand.webp"},{"name":"money","count":18,"src":"webp/money.webp"},{"name":"money_mouth","count":55,"src":"webp/money_mouth.webp"},{"name":"monocle","count":92,"src":"webp/monocle.webp"},{"name":"nails","count":32,"src":"webp/nails.webp"},{"name":"nauseated","count":69,"src":"webp/nauseated.webp"},{"name":"nerd","count":9,"src":"webp/nerd.webp"},{"name":"party","count":46,"src":"webp/party.webp"},{"name":"pinched","count":83,"src":"webp/pinched.webp"},{"name":"point_finger","count":23,"src":"webp/point_finger.webp"},{"name":"police_car","count":60,"src":"webp/police_car.webp"},{"name":"pouting","count":97,"src":"webp/pouting.webp"},{"name":"pray","count":37,"src":"webp/pray.webp"},{"name":"relieved","count":74,"src":"webp/relieved.webp"},{"name":"rock","count":14,"src":"webp/rock.webp"},{"name":"rolling_eyes","count":51,"src":"webp/rolling_eyes.webp"},{"name":"sad","count":88,"src":"webp/sad.webp"},{"name":"scream","count":28,"src":"webp/scream.webp"},{"name":"shushing","count":65,"src":"webp/shushing.webp"},{"name":"skull","count":5,"src":"webp/skull.webp"},{"name":"sleep","count":42,"src":"webp/sleep.webp"},{"name":"smiling","count":79,"src":"webp/smiling.webp"},{"name":"smirking","count":19,"src":"webp/smirking.webp"},{"name":"steam_nose","count":56,"src":"webp/steam_nose.webp"},{"name":"tear_laugh","count":93,"src":"webp/tear_laugh.webp"},{"name":"thinking","count":33,"src":"webp/thinking.webp"},{"name":"tongue","count":70,"src":"webp/tongue.webp"},{"name":"toxic","count":10,"src":"webp/toxic.webp"},{"name":"upside-down","count":47,"src":"webp/upside-down.webp"},{"name":"weary","count":84,"src":"webp/weary.webp"},{"name":"woozy","count":24,"src":"webp/woozy.webp"}];
 
-  function createReactionImage(reaction, className) {
+  function createReactionImage(reaction, className, isPaused = false) {
     const image = document.createElement('img');
     image.className = className;
-    image.src = reaction.src;
+    image.dataset.animationSrc = reaction.src;
+    if (!isPaused) image.src = reaction.src;
     image.alt = '';
     image.draggable = false;
     return image;
@@ -652,12 +715,53 @@
       const panelItem = document.createElement('div');
       panelItem.className = 'reaction-panel-item';
       panelItem.title = reaction.name;
-      panelItem.appendChild(createReactionImage(reaction, 'reaction-panel-image'));
+      panelItem.appendChild(createReactionImage(reaction, 'reaction-panel-image', true));
       reactionPanel.appendChild(panelItem);
     });
   }
 
   mountWebpReactions();
+
+  const postCard = document.querySelector('.post-card');
+  const reactionPanel = document.getElementById('reaction-panel');
+  const viewSwitchButtons = document.querySelectorAll('.view-switch');
+
+  function pauseImages(container) {
+    container.querySelectorAll('img[src]').forEach((image) => {
+      if (!image.dataset.animationSrc) image.dataset.animationSrc = image.getAttribute('src');
+      image.removeAttribute('src');
+    });
+  }
+
+  function resumeImages(container) {
+    container.querySelectorAll('img[data-animation-src]:not([src])').forEach((image) => {
+      image.src = image.dataset.animationSrc;
+    });
+  }
+
+  function setActiveView(view) {
+    const showPost = view === 'post';
+    const visibleView = showPost ? postCard : reactionPanel;
+    const hiddenView = showPost ? reactionPanel : postCard;
+
+    pauseImages(hiddenView);
+    hiddenView.hidden = true;
+    visibleView.hidden = false;
+    resumeImages(visibleView);
+
+    viewSwitchButtons.forEach((button) => {
+      const isActive = button.dataset.view === view;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+  }
+
+  viewSwitchButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      if (button.getAttribute('aria-pressed') === 'true') return;
+      setActiveView(button.dataset.view);
+    });
+  });
 
   const badgeUploadMessage = 'Перетащите картинку в формате SVG, PNG, JPG, JPEG, WEBP или GIF.';
   const supportedBadgeExtensions = ['svg', 'png', 'jpg', 'jpeg', 'webp', 'gif'];
@@ -694,8 +798,13 @@
 
     const image = document.createElement('img');
     image.className = className;
-    image.src = src;
     image.alt = '';
+
+    if (container.closest('[hidden]')) {
+      image.dataset.animationSrc = src;
+    } else {
+      image.src = src;
+    }
 
     container.appendChild(image);
   }
