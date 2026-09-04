@@ -35,26 +35,16 @@
     justify-content: center;
     width: 52px;
     height: 52px;
-    padding: 0;
     color: #000;
-    background: transparent;
-    border: 0;
-    border-radius: 8px;
-    cursor: pointer;
   }
 
   .site-logo svg path {
     fill: currentColor;
   }
 
-  .site-logo:focus-visible {
-    outline: 3px solid #418AF4;
-    outline-offset: 1px;
-  }
-
-  .view-switcher {
+  .view-switcher,
+  .theme-switcher {
     position: fixed;
-    top: 84px;
     left: 16px;
     z-index: 9;
     display: flex;
@@ -66,7 +56,11 @@
     border-radius: 10px;
   }
 
-  .view-switch {
+  .view-switcher { top: 84px; }
+  .theme-switcher { top: 170px; }
+
+  .view-switch,
+  .theme-switch {
     width: 92px;
     height: 34px;
     padding: 0 10px;
@@ -80,16 +74,19 @@
     cursor: pointer;
   }
 
-  .view-switch:hover {
+  .view-switch:hover,
+  .theme-switch:hover {
     background: #F4F4F4;
   }
 
-  .view-switch.is-active {
+  .view-switch.is-active,
+  .theme-switch.is-active {
     color: #fff;
     background: #0B5DD7;
   }
 
-  .view-switch:focus-visible {
+  .view-switch:focus-visible,
+  .theme-switch:focus-visible {
     outline: 3px solid #418AF4;
     outline-offset: 1px;
   }
@@ -453,18 +450,26 @@
     body {
       flex-direction: column;
       align-items: center;
-      padding-top: 124px;
+      padding-top: 180px;
     }
 
     .view-switcher {
       top: 68px;
+    }
+
+    .theme-switcher {
+      top: 120px;
+    }
+
+    .view-switcher,
+    .theme-switcher {
       flex-direction: row;
     }
   }
 
   /* Адаптив */
   @media (max-width: 640px) {
-    body { padding: 116px 0 0; }
+    body { padding: 180px 0 0; }
     .site-header { padding: 0 16px; }
     .post-card { border-radius: 0; }
     .post-content {
@@ -477,7 +482,7 @@
   /* Темная тема */
 
   /* Плавные переходы */
-  body, .site-header, .site-logo, .view-switcher, .view-switch, .post-card, .post-title, .author-name, .author-time, .author-section,
+  body, .site-header, .site-logo, .view-switcher, .theme-switcher, .view-switch, .theme-switch, .post-card, .post-title, .author-name, .author-time, .author-section,
   .btn-subscribe, .reaction-inactive, .reaction-add, .action-btn, .action-right,
   .post-content, .reaction-panel {
     transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
@@ -487,12 +492,17 @@
   [data-theme="dark"] body,
   [data-theme="dark"] .site-header,
   [data-theme="dark"] .view-switcher,
+  [data-theme="dark"] .theme-switcher,
   [data-theme="dark"] .post-card,
   [data-theme="dark"] .reaction-panel { background: #000000; }
-  [data-theme="dark"] .view-switcher { border-color: #2E2E2E; }
-  [data-theme="dark"] .view-switch { color: #969C9D; }
-  [data-theme="dark"] .view-switch:hover { background: #333333; }
-  [data-theme="dark"] .view-switch.is-active { color: #FFFFFF; background: #418AF4; }
+  [data-theme="dark"] .view-switcher,
+  [data-theme="dark"] .theme-switcher { border-color: #2E2E2E; }
+  [data-theme="dark"] .view-switch,
+  [data-theme="dark"] .theme-switch { color: #969C9D; }
+  [data-theme="dark"] .view-switch:hover,
+  [data-theme="dark"] .theme-switch:hover { background: #333333; }
+  [data-theme="dark"] .view-switch.is-active,
+  [data-theme="dark"] .theme-switch.is-active { color: #FFFFFF; background: #418AF4; }
   [data-theme="dark"] .site-logo,
   [data-theme="dark"] .author-name,
   [data-theme="dark"] .author-section,
@@ -521,7 +531,7 @@
   [data-theme="dark"] .action-right svg path { fill: #969C9D; }
 
   @media (prefers-reduced-motion: reduce) {
-    body, .site-header, .site-logo, .view-switcher, .view-switch, .post-card, .post-title, .author-name, .author-time, .author-section,
+    body, .site-header, .site-logo, .view-switcher, .theme-switcher, .view-switch, .theme-switch, .post-card, .post-title, .author-name, .author-time, .author-section,
     .btn-subscribe, .reaction-inactive, .reaction-add, .action-btn, .action-right,
     .post-content, .reaction-panel {
       transition: none;
@@ -532,7 +542,7 @@
 <body>
 
 <header class="site-header">
-  <button class="site-logo" id="theme-toggle" type="button" aria-label="Включить темную тему" aria-pressed="false" title="Переключить тему">
+  <div class="site-logo" aria-label="Логотип">
     <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <g clip-path="url(#clip0_24133_20602)">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M34.5684 24.8497C36.8808 24.8497 38.6215 23.8743 39.9057 22.178L38.1906 20.8529C37.3202 22.0054 36.0019 22.6657 34.5684 22.6657C32.0598 22.6657 30.2423 20.5983 30.2423 18.0604C30.2423 15.5224 32.0299 13.3384 34.6409 13.3384C35.8014 13.3384 36.6205 13.6147 37.3373 14.0636V16.295H39.4961V13.0406L39.0822 12.7126C37.8962 11.7673 36.083 11.2667 34.5684 11.2667C30.8652 11.2667 27.8531 14.3139 27.8531 18.0604C27.8531 21.8025 30.8652 24.8497 34.5684 24.8497ZM39.0481 38.2515L38.9713 35.1223V27.4912H34.4703V29.6752H36.6973V34.8547C36.6973 37.0862 35.0121 38.6659 33.3141 38.6659C31.6161 38.6659 30.7287 37.4746 30.7287 35.2431V27.4912H26.522V29.6752H28.4547V35.623C28.4547 38.6486 30.1314 40.7333 33.1221 40.7333C34.8415 40.7333 36.1512 39.7708 36.932 38.2817H36.9661L37.2733 40.3621H40.7333V38.2558H39.0481V38.2515ZM27.354 11.5861H23.6038L20.34 21.1724H20.2888L17.0421 11.5861H13.0445V13.7701H15.2929L19.1625 24.6987H21.2189V24.6944L25.2549 13.7701H27.354V11.5861ZM9.53333 40.3885H11.7561V38.1393H9.53333V40.3885ZM18.1216 30.0249H18.096L17.9552 27.4913H13.9875V29.481H16.0993V38.2515H13.9875V40.3578H23.7959V38.2904H18.3349V32.9987C18.5823 31.0823 20.003 29.4465 21.94 29.4465H21.9741L21.9357 31.406H24.0945V27.4524H22.388C20.434 27.4481 18.9834 28.5185 18.1216 30.0249Z" fill="black"/>
@@ -543,12 +553,17 @@
         </clipPath>
       </defs>
     </svg>
-  </button>
+  </div>
 </header>
 
 <nav class="view-switcher" aria-label="Отображаемый раздел">
   <button class="view-switch is-active" type="button" data-view="post" aria-pressed="true">Пост</button>
   <button class="view-switch" type="button" data-view="reactions" aria-pressed="false">Реакции</button>
+</nav>
+
+<nav class="theme-switcher" aria-label="Цветовая тема">
+  <button class="theme-switch is-active" type="button" data-theme-option="light" aria-pressed="true">Светлая</button>
+  <button class="theme-switch" type="button" data-theme-option="dark" aria-pressed="false">Тёмная</button>
 </nav>
 
 <div class="post-card">
@@ -767,21 +782,29 @@
   const supportedBadgeExtensions = ['svg', 'png', 'jpg', 'jpeg', 'webp', 'gif'];
 
   // Переключение темы
-  const themeToggle = document.getElementById('theme-toggle');
+  const themeSwitchButtons = document.querySelectorAll('.theme-switch');
 
-  themeToggle.addEventListener('click', () => {
+  function setTheme(theme) {
     const html = document.documentElement;
-    const isDark = html.getAttribute('data-theme') === 'dark';
-    const nextTheme = isDark ? 'light' : 'dark';
 
-    if (nextTheme === 'dark') {
+    if (theme === 'dark') {
       html.setAttribute('data-theme', 'dark');
     } else {
       html.removeAttribute('data-theme');
     }
 
-    themeToggle.setAttribute('aria-pressed', String(nextTheme === 'dark'));
-    themeToggle.setAttribute('aria-label', nextTheme === 'dark' ? 'Включить светлую тему' : 'Включить темную тему');
+    themeSwitchButtons.forEach((button) => {
+      const isActive = button.dataset.themeOption === theme;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+  }
+
+  themeSwitchButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      if (button.getAttribute('aria-pressed') === 'true') return;
+      setTheme(button.dataset.themeOption);
+    });
   });
 
   function isSupportedBadgeImage(file) {
