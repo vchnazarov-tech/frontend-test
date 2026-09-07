@@ -42,6 +42,37 @@
     fill: currentColor;
   }
 
+  .reaction-pack-switcher {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .reaction-pack-link {
+    padding: 6px 10px;
+    color: #595959;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-decoration: none;
+  }
+
+  .reaction-pack-link:hover { background: rgba(0, 0, 0, 0.06); }
+
+  .reaction-pack-link.is-active {
+    color: #000;
+    background: #fff;
+  }
+
+  .reaction-pack-link:focus-visible {
+    outline: 3px solid #418AF4;
+    outline-offset: 1px;
+  }
+
   .view-switcher,
   .theme-switcher {
     position: fixed;
@@ -514,6 +545,9 @@
   [data-theme="dark"] .btn-more svg circle { fill: #FFFFFF; }
   [data-theme="dark"] .post-content { background: #000000; border-color: #2E2E2E; color: #969C9D; }
   [data-theme="dark"] .avatar-badge { border-color: #000000; }
+  [data-theme="dark"] .reaction-pack-link { color: #969C9D; }
+  [data-theme="dark"] .reaction-pack-link:hover { background: #333333; }
+  [data-theme="dark"] .reaction-pack-link.is-active { color: #FFFFFF; background: #333333; }
 
   /* Реакции и экшен-бар */
   [data-theme="dark"] .reaction-active { background: #418AF4; color: #FFFFFF; }
@@ -554,6 +588,10 @@
       </defs>
     </svg>
   </div>
+  <nav class="reaction-pack-switcher" aria-label="Набор реакций">
+    <a class="reaction-pack-link is-active" href="#emodji" data-reaction-pack="emodji" aria-current="page">Emodji</a>
+    <a class="reaction-pack-link" href="#cats" data-reaction-pack="cats">Коты</a>
+  </nav>
 </header>
 
 <nav class="view-switcher" aria-label="Отображаемый раздел">
@@ -696,6 +734,26 @@
 
 <script>
   const webpReactions = [{"name":"alien","count":49,"src":"webp/alien.webp"},{"name":"biceps","count":86,"src":"webp/biceps.webp"},{"name":"bomb","count":26,"src":"webp/bomb.webp"},{"name":"call_me_hand","count":63,"src":"webp/call_me_hand.webp"},{"name":"cold","count":3,"src":"webp/cold.webp"},{"name":"crazy","count":40,"src":"webp/crazy.webp"},{"name":"crossed","count":77,"src":"webp/crossed.webp"},{"name":"crying","count":17,"src":"webp/crying.webp"},{"name":"devil2","count":91,"src":"webp/devil2.webp"},{"name":"dizzy","count":31,"src":"webp/dizzy.webp"},{"name":"explosion","count":68,"src":"webp/explosion.webp"},{"name":"eyebrow","count":8,"src":"webp/eyebrow.webp"},{"name":"facepalm","count":45,"src":"webp/facepalm.webp"},{"name":"fingers","count":82,"src":"webp/fingers.webp"},{"name":"fist","count":22,"src":"webp/fist.webp"},{"name":"ghost","count":59,"src":"webp/ghost.webp"},{"name":"grimacing","count":96,"src":"webp/grimacing.webp"},{"name":"Gun","count":36,"src":"webp/Gun.webp"},{"name":"halo","count":73,"src":"webp/halo.webp"},{"name":"heal","count":13,"src":"webp/heal.webp"},{"name":"heart_eyes","count":50,"src":"webp/heart_eyes.webp"},{"name":"hugging","count":87,"src":"webp/hugging.webp"},{"name":"hushed","count":27,"src":"webp/hushed.webp"},{"name":"invader","count":64,"src":"webp/invader.webp"},{"name":"Kissing","count":4,"src":"webp/Kissing.webp"},{"name":"laugh","count":41,"src":"webp/laugh.webp"},{"name":"magic_wand","count":78,"src":"webp/magic_wand.webp"},{"name":"money","count":18,"src":"webp/money.webp"},{"name":"money_mouth","count":55,"src":"webp/money_mouth.webp"},{"name":"monocle","count":92,"src":"webp/monocle.webp"},{"name":"nails","count":32,"src":"webp/nails.webp"},{"name":"nauseated","count":69,"src":"webp/nauseated.webp"},{"name":"nerd","count":9,"src":"webp/nerd.webp"},{"name":"party","count":46,"src":"webp/party.webp"},{"name":"pinched","count":83,"src":"webp/pinched.webp"},{"name":"point_finger","count":23,"src":"webp/point_finger.webp"},{"name":"police_car","count":60,"src":"webp/police_car.webp"},{"name":"pouting","count":97,"src":"webp/pouting.webp"},{"name":"pray","count":37,"src":"webp/pray.webp"},{"name":"relieved","count":74,"src":"webp/relieved.webp"},{"name":"rock","count":14,"src":"webp/rock.webp"},{"name":"rolling_eyes","count":51,"src":"webp/rolling_eyes.webp"},{"name":"sad","count":88,"src":"webp/sad.webp"},{"name":"scream","count":28,"src":"webp/scream.webp"},{"name":"shushing","count":65,"src":"webp/shushing.webp"},{"name":"skull","count":5,"src":"webp/skull.webp"},{"name":"sleep","count":42,"src":"webp/sleep.webp"},{"name":"smiling","count":79,"src":"webp/smiling.webp"},{"name":"smirking","count":19,"src":"webp/smirking.webp"},{"name":"steam_nose","count":56,"src":"webp/steam_nose.webp"},{"name":"tear_laugh","count":93,"src":"webp/tear_laugh.webp"},{"name":"thinking","count":33,"src":"webp/thinking.webp"},{"name":"tongue","count":70,"src":"webp/tongue.webp"},{"name":"toxic","count":10,"src":"webp/toxic.webp"},{"name":"upside-down","count":47,"src":"webp/upside-down.webp"},{"name":"weary","count":84,"src":"webp/weary.webp"},{"name":"woozy","count":24,"src":"webp/woozy.webp"}];
+  const catReactionFiles = [
+    '5.webp', '2.webp', '1.webp', '3.webp', '4.webp',
+    'screamingcat.webp', 'catcried.png', 'alarm-dancing-cat.webp', 'bhacker.webp', 'slurrpcat.webp',
+    '11.png', '7.png', '8.png', '9.png', '10.png',
+    'drollingcat.png', 'droolingcatking.png', 'droolingcatwizard.png', 'catnoted.png', 'sigma-cat.png',
+    'shhhhh.png', 'fight.png', 'moneyhands.png', 'noodles.png', 'redcard.png',
+    'greencatmeme.png', 'shocked.png', 'plotting.png', 'catfedora.webp', 'catwave.webp',
+    'partycat.webp', 'blehcat.webp', 'catexplode.webp', 'evilcat.webp', 'catlaugh.webp',
+    'sneakycat.webp', 'nono.webp', 'sir-salad.png', 'cat-tanghoa.png', 'catlust.png',
+    'gomamassage.webp', 'gomaheartarrow.webp', 'gomaguns.webp', 'kittytwerk.webp', 'peachpuke.webp',
+    'pawpress.webp', 'happycat.webp', 'gomabedtime.webp', 'gomadance.webp', 'meowparty.webp',
+    'meowheartslam.webp', 'meowattention.webp', 'catpikachu.png', 'meowpeek.png', 'meowknife.png',
+    '6.png', 'redblob.webp', 'angrytigercub.webp'
+  ];
+  const catReactions = catReactionFiles.map((file, index) => ({
+    name: file.replace(/\.[^.]+$/, ''),
+    count: index + 1,
+    src: `cats-webp/${file}`,
+  }));
+  const reactionPacks = { emodji: webpReactions, cats: catReactions };
   const panelReactionNames = [
     'laugh', 'tear_laugh', 'Kissing', 'crying', 'grimacing',
     'relieved', 'sad', 'nerd', 'monocle', 'scream',
@@ -721,12 +779,16 @@
     return image;
   }
 
-  function mountWebpReactions() {
+  function mountReactions(packName) {
     const reactionsBar = document.querySelector('.reactions-bar');
     const addReactionButton = document.querySelector('.reaction-add');
     const reactionPanel = document.getElementById('reaction-panel');
+    const reactions = reactionPacks[packName];
 
-    webpReactions.forEach((reaction) => {
+    reactionsBar.querySelectorAll('.reaction-inactive').forEach((item) => item.remove());
+    reactionPanel.replaceChildren();
+
+    reactions.forEach((reaction) => {
       const barItem = document.createElement('div');
       barItem.className = 'reaction reaction-inactive';
       barItem.title = reaction.name;
@@ -742,18 +804,39 @@
       reactionsBar.insertBefore(barItem, addReactionButton);
     });
 
-    const reactionsByName = new Map(webpReactions.map((reaction) => [reaction.name, reaction]));
-    panelReactionNames.forEach((name) => {
-      const reaction = reactionsByName.get(name);
+    const panelReactions = packName === 'emodji'
+      ? panelReactionNames.map((name) => reactions.find((reaction) => reaction.name === name))
+      : reactions;
+    panelReactions.forEach((reaction) => {
       const panelItem = document.createElement('div');
       panelItem.className = 'reaction-panel-item';
       panelItem.title = reaction.name;
-      panelItem.appendChild(createReactionImage(reaction, 'reaction-panel-image', true));
+      panelItem.appendChild(createReactionImage(reaction, 'reaction-panel-image', reactionPanel.hidden));
       reactionPanel.appendChild(panelItem);
     });
   }
 
-  mountWebpReactions();
+  mountReactions('emodji');
+
+  const reactionPackLinks = document.querySelectorAll('.reaction-pack-link');
+
+  function setReactionPack(packName) {
+    mountReactions(packName);
+    reactionPackLinks.forEach((link) => {
+      const isActive = link.dataset.reactionPack === packName;
+      link.classList.toggle('is-active', isActive);
+      link.toggleAttribute('aria-current', isActive);
+    });
+  }
+
+  reactionPackLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const packName = link.dataset.reactionPack;
+      if (link.classList.contains('is-active')) return;
+      setReactionPack(packName);
+    });
+  });
 
   const postCard = document.querySelector('.post-card');
   const reactionPanel = document.getElementById('reaction-panel');
