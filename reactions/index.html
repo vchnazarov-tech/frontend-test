@@ -475,7 +475,10 @@
     width: 36px;
     height: 36px;
     object-fit: contain;
+    cursor: copy;
   }
+
+  .reaction-webp-image { cursor: copy; }
 
   @media (max-width: 1000px) {
     body {
@@ -591,6 +594,9 @@
   <nav class="reaction-pack-switcher" aria-label="Набор реакций">
     <a class="reaction-pack-link is-active" href="#emodji" data-reaction-pack="emodji" aria-current="page">Emodji</a>
     <a class="reaction-pack-link" href="#cats" data-reaction-pack="cats">Коты</a>
+    <a class="reaction-pack-link" href="#movies" data-reaction-pack="movies">Кино</a>
+    <a class="reaction-pack-link" href="#memes" data-reaction-pack="memes">Мемы</a>
+    <a class="reaction-pack-link" href="#business" data-reaction-pack="business">Бизнес</a>
   </nav>
 </header>
 
@@ -753,7 +759,211 @@
     count: index + 1,
     src: `cats-webp/${file}`,
   }));
-  const reactionPacks = { emodji: webpReactions, cats: catReactions };
+  const movieReactionFiles = [
+    'americanpsycho.webp',
+    'rock.webp',
+    'wwe.webp',
+    'sorry.webp',
+    'watching.webp',
+    'jona.webp',
+    'leo.png',
+    'waltershook.webp',
+    'office.png',
+    'piccard.png',
+    'joaquin phoenix joker smile sad smirk.webp',
+    'joker no u.webp',
+    'joker33.webp',
+    'joker forced smile.webp',
+    'joker laughing.webp',
+    'dancing joker the why so.webp',
+    'why so serious joker here we go slow clap.webp',
+    'the dark knight heath ledger joker sass sassy.webp',
+    'joker heath ledger the dark knight tongue out whatever.webp',
+    'joker why so serious serious.webp',
+    'richard gecko eye contact.webp',
+    'batmanno.webp',
+    'gollum lotr.webp',
+    'baromir onedoesnotsimply.webp',
+    'ryangoslingminecraftslime.webp',
+    'hanslanda.webp',
+    'arnoldstop.webp',
+    'term.webp',
+    'wonka.webp',
+    'chosendeath.webp',
+    'shrek freaky.webp',
+    'shrek.webp',
+    'shrek concerned.webp',
+    'shrek cat.webp',
+    'Shrekvibe.webp',
+    'morpheus.webp',
+    'jDkewgif.webp',
+    'gif.webp',
+    'matrixgif.webp',
+    'dgif.webp',
+    'neo the one the matrix the matrix reloaded flying.webp',
+    'matrix-neo.webp',
+    'shadowforza.webp',
+    'agent smith the matrix matrix neo laughing.webp',
+    'neo mouthshut matrix blue pill gif.webp',
+    'leonidas sparta this is sparta spartan.webp',
+    'reaction 4.webp',
+    'fuck offgif.webp',
+    'sparta-stat.webp',
+    'dbfcebeccdefdbbgif.webp',
+    'trollface.webp',
+    'leonardo dicaprio flowers love you.webp',
+    'leodicaprio leonardo dicaprio leonardodicaprio sensacine.webp',
+    'ahi di caprio sealando gif.webp',
+    'average giveaway host roles.webp',
+    'egg wuh egg roll leonardo dicaprio.webp',
+    'titanic titanic movie jack dawson jackdawson leonardo dicaprio.webp',
+    'dancing rick daltongif.webp',
+    'omg omfg leonardo dicaprio leo dicaprio.webp',
+    'leonardo dicaprio.webp',
+    'daffbafdecbfgif.webp',
+    'deadpoolx.webp',
+    'fortnite fortnite battle royale thanos marvel.webp',
+    'forrest gump wave hello hi sup.webp',
+    'winter winter is coming snow.webp',
+    'oooo fifth element rubyrod closer come closer.webp',
+    'here we go again annoyed jean claude van damme bored anxious.webp',
+    'hyunjae arnold schwarzenegger the boyz lee jaehyun tbz.webp',
+    'assasin mode.webp',
+    'jimcarrey jim carrey themask the mask movie.webp'
+  ];
+  const movieReactions = movieReactionFiles.map((file, index) => ({
+    name: file.replace(/\.[^.]+$/, ''),
+    count: index + 1,
+    src: `movies-webp/${file}`,
+  }));
+  const memeReactionFiles = [
+    'pepe.png',
+    'pepe2.webp',
+    'pepeblob.webp',
+    'pepeclap.webp',
+    'peperich.webp',
+    'pepetyping.webp',
+    'pepecross.webp',
+    'peperain.webp',
+    'strongpepe.webp',
+    'pepecheer.webp',
+    'petpetpepe.webp',
+    'pepescreamspin.webp',
+    'pepewow.webp',
+    'pepenervous.webp',
+    'pepefeetswing.webp',
+    'fine.webp',
+    'smart.webp',
+    'girl.webp',
+    'pikachu.png',
+    'crackward.webp',
+    'dogeshbhai.webp',
+    'doge-sad.webp',
+    'doge-gun.webp',
+    'doge.webp',
+    'bonk.webp',
+    'spinningtrollface.webp',
+    'troll.webp',
+    'trolldance.webp',
+    'troll-pig.webp',
+    'joobi-troll-face-blue.webp',
+    'soyjaklaugh.webp',
+    'doomer.webp',
+    'face.webp',
+    'hewillnever-spew.webp',
+    'florkangel.webp',
+    'shrugdiscordemoji.webp',
+    'jam-ducky.webp',
+    'hahaclassic-duck.webp',
+    'sanic.webp',
+    '756722-jesus.webp',
+    'dancing-banana.webp',
+    'snoopyheart.webp',
+    'spongebobmocking.webp',
+    'pikachu.webp',
+    '4574-philosoraptor.webp',
+    'giga.png',
+    'tada-hype.webp',
+    'rgb-spooder-man.webp',
+    'blaze-froggo.webp',
+    'doggiedance.webp',
+    'disapproval.webp',
+    'alien.webp'
+  ];
+  const memeReactions = memeReactionFiles.map((file, index) => ({
+    name: file.replace(/\.[^.]+$/, ''),
+    count: index + 1,
+    src: `memes-webp/${file}`,
+  }));
+  const businessReactionFiles = [
+    'musk.png',
+    'elvira.png',
+    'tinkov.png',
+    'durov.png',
+    'georgewashington.webp',
+    'up.webp',
+    'down.webp',
+    'moneygun.webp',
+    'money.webp',
+    'cash.webp',
+    'make.webp',
+    'credit card take my money shut up and take my money black friday.webp',
+    'green rocket to the moon rocketship takeoff.webp',
+    'work go to work monday job business.webp',
+    'crypto rich investment money stocks.webp',
+    'money-counting.webp',
+    'benjammins benjamins take my money take my money meme shut up and take my money.webp',
+    'money money money.webp',
+    'shut up and take my money futurama.webp',
+    'money mon cash ca rich.webp',
+    'shark finding nemo bruce grin grinning.webp',
+    'shark.webp',
+    'blue shark shark dancing groovy happy.webp',
+    'shark mind blown shark expolision shark expolision.webp',
+    'shark fire pyro burn it down sharks.webp',
+    'spanky throwing money cash money our gang little rascals.webp',
+    'cash money cash dollar bills gun money rain.webp',
+    'money money money cash money money take my money show me the money.webp',
+    'dollar bills cash hello phone call.webp',
+    'spanky im waiting little rascals.webp',
+    'sleepy bored pepe exhausted yawning.webp',
+    'Screenshot 2026-09-12 at 22.37.37.webp',
+    'cat dance.webp',
+    'alexrqcaz tobidogx.webp',
+    'jmjtb.webp',
+    'battery1.webp',
+    'battery2.webp',
+    'money lottie.webp',
+    'clippy windows xp microsoft office microsoft word ms office.webp',
+    'pushpin objects joypixels thumbtack drawing pin.webp',
+    'buttons pam.webp',
+    'angry bull.webp',
+    'bull ox horns angry.webp',
+    'bear bike bicycle black bear.webp',
+    'raamking.webp',
+    'down bad down wojak wojak down down stocks down.webp',
+    'stonkseth stonks eth stonkstoken stonks token stonks.webp',
+    'not stonks stonks no stonks extreme olivyeah.webp',
+    'stonks stonk stonkseth stonks eth stonkstoken.webp',
+    'stonks stonk stonkseth stonks eth stonkstoken variant.webp',
+    'Screenshot 2026-09-12 at 23.02.47.webp',
+    'rata sonriendo ratita rata con gafas.webp',
+    'yes.webp',
+    '100-absolute-win.webp',
+    'mr monopoly very skillful appearing crossed arms.webp'
+  ];
+  const businessReactions = businessReactionFiles.map((file, index) => ({
+    name: file.replace(/\.[^.]+$/, ''),
+    count: index + 1,
+    src: `bussiness-webp/${file}`,
+  }));
+  const reactionPacks = {
+    emodji: webpReactions,
+    cats: catReactions,
+    movies: movieReactions,
+    memes: memeReactions,
+    business: businessReactions,
+  };
   const panelReactionNames = [
     'laugh', 'tear_laugh', 'Kissing', 'crying', 'grimacing',
     'relieved', 'sad', 'nerd', 'monocle', 'scream',
@@ -774,6 +984,67 @@
     webpReactions.find((reaction) => reaction.name === name)
   );
 
+  const pageStateStorageKey = 'reaction-template-state-v1';
+  const defaultPageState = {
+    reactionPack: 'emodji',
+    view: 'post',
+    theme: 'light',
+  };
+
+  function loadPageState() {
+    try {
+      const savedState = JSON.parse(localStorage.getItem(pageStateStorageKey));
+      if (!savedState || typeof savedState !== 'object') return { ...defaultPageState };
+
+      return {
+        reactionPack: Object.hasOwn(reactionPacks, savedState.reactionPack)
+          ? savedState.reactionPack
+          : defaultPageState.reactionPack,
+        view: ['post', 'reactions'].includes(savedState.view)
+          ? savedState.view
+          : defaultPageState.view,
+        theme: ['light', 'dark'].includes(savedState.theme)
+          ? savedState.theme
+          : defaultPageState.theme,
+      };
+    } catch {
+      return { ...defaultPageState };
+    }
+  }
+
+  let pageState = loadPageState();
+
+  function savePageState(changes) {
+    pageState = { ...pageState, ...changes };
+
+    try {
+      localStorage.setItem(pageStateStorageKey, JSON.stringify(pageState));
+    } catch {
+      // Страница продолжает работать, даже если локальное хранилище недоступно.
+    }
+  }
+
+  function copyReactionName(name) {
+    const fallbackCopy = () => {
+      const textarea = document.createElement('textarea');
+      textarea.value = name;
+      textarea.readOnly = true;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      textarea.style.pointerEvents = 'none';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    };
+
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(name).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+  }
+
   function createReactionImage(reaction, className, isPaused = false) {
     const image = document.createElement('img');
     image.className = className;
@@ -781,6 +1052,7 @@
     if (!isPaused) image.src = reaction.src;
     image.alt = '';
     image.draggable = false;
+    image.addEventListener('click', () => copyReactionName(reaction.name));
     return image;
   }
 
@@ -821,17 +1093,17 @@
     });
   }
 
-  mountReactions('emodji');
-
   const reactionPackLinks = document.querySelectorAll('.reaction-pack-link');
 
-  function setReactionPack(packName) {
+  function setReactionPack(packName, persist = true) {
     mountReactions(packName);
     reactionPackLinks.forEach((link) => {
       const isActive = link.dataset.reactionPack === packName;
       link.classList.toggle('is-active', isActive);
       link.toggleAttribute('aria-current', isActive);
     });
+
+    if (persist) savePageState({ reactionPack: packName });
   }
 
   reactionPackLinks.forEach((link) => {
@@ -842,6 +1114,8 @@
       setReactionPack(packName);
     });
   });
+
+  setReactionPack(pageState.reactionPack, false);
 
   const postCard = document.querySelector('.post-card');
   const reactionPanel = document.getElementById('reaction-panel');
@@ -860,7 +1134,7 @@
     });
   }
 
-  function setActiveView(view) {
+  function setActiveView(view, persist = true) {
     const showPost = view === 'post';
     const visibleView = showPost ? postCard : reactionPanel;
     const hiddenView = showPost ? reactionPanel : postCard;
@@ -875,6 +1149,8 @@
       button.classList.toggle('is-active', isActive);
       button.setAttribute('aria-pressed', String(isActive));
     });
+
+    if (persist) savePageState({ view });
   }
 
   viewSwitchButtons.forEach((button) => {
@@ -884,13 +1160,15 @@
     });
   });
 
+  setActiveView(pageState.view, false);
+
   const badgeUploadMessage = 'Перетащите картинку в формате SVG, PNG, JPG, JPEG, WEBP или GIF.';
   const supportedBadgeExtensions = ['svg', 'png', 'jpg', 'jpeg', 'webp', 'gif'];
 
   // Переключение темы
   const themeSwitchButtons = document.querySelectorAll('.theme-switch');
 
-  function setTheme(theme) {
+  function setTheme(theme, persist = true) {
     const html = document.documentElement;
 
     if (theme === 'dark') {
@@ -904,6 +1182,8 @@
       button.classList.toggle('is-active', isActive);
       button.setAttribute('aria-pressed', String(isActive));
     });
+
+    if (persist) savePageState({ theme });
   }
 
   themeSwitchButtons.forEach((button) => {
@@ -912,6 +1192,8 @@
       setTheme(button.dataset.themeOption);
     });
   });
+
+  setTheme(pageState.theme, false);
 
   function isSupportedBadgeImage(file) {
     const extension = file.name.split('.').pop().toLowerCase();
