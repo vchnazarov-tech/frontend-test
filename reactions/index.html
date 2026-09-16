@@ -597,6 +597,7 @@
     <a class="reaction-pack-link" href="#movies" data-reaction-pack="movies">Кино</a>
     <a class="reaction-pack-link" href="#memes" data-reaction-pack="memes">Мемы</a>
     <a class="reaction-pack-link" href="#business" data-reaction-pack="business">Бизнес</a>
+    <a class="reaction-pack-link" href="#rewards" data-reaction-pack="rewards">Награды</a>
   </nav>
 </header>
 
@@ -957,12 +958,38 @@
     count: index + 1,
     src: `bussiness-webp/${file}`,
   }));
+  const rewardReactionFiles = [
+    'gem.webp',
+    'star.webp',
+    'medal.webp',
+    'trophy.webp',
+    'Crown.webp',
+    'trophy-fixed.webp',
+    'nyxdiamond.webp',
+    'champagne.webp',
+    'medalla.webp',
+    'griffon-star.webp',
+    'rainbowstar.webp',
+    'golden-crab.webp',
+    'golden-spin-coin.webp',
+    'gem-heart-pale-gold.webp',
+    'keklaugh-shine-gold.webp',
+    'snake.webp',
+    'golden-diamond.webp',
+    'vip.webp'
+  ];
+  const rewardReactions = rewardReactionFiles.map((file, index) => ({
+    name: file.replace(/\.[^.]+$/, ''),
+    count: index + 1,
+    src: `rewards-webp/${file}`,
+  }));
   const reactionPacks = {
     emodji: webpReactions,
     cats: catReactions,
     movies: movieReactions,
     memes: memeReactions,
     business: businessReactions,
+    rewards: rewardReactions,
   };
   const panelReactionNames = [
     'laugh', 'tear_laugh', 'Kissing', 'crying', 'grimacing',
