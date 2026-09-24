@@ -598,6 +598,7 @@
     <a class="reaction-pack-link" href="#memes" data-reaction-pack="memes">Мемы</a>
     <a class="reaction-pack-link" href="#business" data-reaction-pack="business">Бизнес</a>
     <a class="reaction-pack-link" href="#rewards" data-reaction-pack="rewards">Награды</a>
+    <a class="reaction-pack-link" href="#games" data-reaction-pack="games">Игры</a>
   </nav>
 </header>
 
@@ -982,6 +983,72 @@
     count: index + 1,
     src: `rewards-webp/${file}`,
   }));
+  const gameReactionFiles = [
+    'kojima-clap.webp',
+    'kojima.webp',
+    'spin-spinning.webp',
+    'video-game-cat.webp',
+    'liu-kang-bicycle-kick.webp',
+    'tonto-spin.webp',
+    'mario-dance.webp',
+    'bowser-twerking.webp',
+    'sonic.webp',
+    'sonic-xtreme-dance.webp',
+    'press-f.webp',
+    'game-over.webp',
+    'vault-boy.webp',
+    'angry-birds-music.webp',
+    'angry-birds-blue-spin.webp',
+    'nojin.webp',
+    'steve-minecraft-minecraft.webp',
+    'gta-cj.webp',
+    'little-cj.webp',
+    'gta-6-jason-duval.webp',
+    'half-life.webp',
+    '2image(1).webp',
+    'kratos-eyebrow.webp',
+    'kratos-god-of-war.webp',
+    'games-meme-ps4.webp',
+    'the-last-of-us-ellie-half-smile.webp',
+    'uncharted-look-around.webp',
+    'resident-evil-leon.webp',
+    '5image(1).webp',
+    'troglodyte-homm3.webp',
+    'headcrab.webp',
+    'crowbar-hl2.webp',
+    'doomguy.png',
+    'doom-slayer-dance.webp',
+    'quake-grunt-dance.webp',
+    'attorney-transparent.webp',
+    'bird-far-from-god.webp',
+    'cropped_serious-man-on-couch.webp',
+    'diablo-shirt-man.webp',
+    'god-of-war-atreus-pout.webp',
+    'god-of-war-kratos-stare.webp',
+    'grimacing-man.webp',
+    'half-shadow-smirk.webp',
+    'nanomachines-son.webp',
+    'russian-sunset-quote.webp',
+    'sam-lake-squint.webp',
+    'the-last-of-us-ellie-eyes-closed.webp',
+    'the-last-of-us-ellie-gesture.webp',
+    'the-last-of-us-ellie-smile.webp',
+    'the-last-of-us-joel-facepalm.webp',
+    'the-last-of-us-joel-smile.webp',
+    'the-last-of-us-joel-winter-smile.webp',
+    'are-ya-winning-son 2.webp',
+    'diablo-shirt-man 2.webp',
+    'game-meme.webp',
+    'caught-cropped-left.webp',
+    'caught-cropped-right.webp',
+    'god-of-war-kratos-dumpster.webp',
+    'minecraft-steve.webp'
+  ];
+  const gameReactions = gameReactionFiles.map((file, index) => ({
+    name: file.replace(/\.[^.]+$/, ''),
+    count: index + 1,
+    src: `games-webp/${file}`,
+  }));
   const reactionPacks = {
     emodji: webpReactions,
     cats: catReactions,
@@ -989,6 +1056,7 @@
     memes: memeReactions,
     business: businessReactions,
     rewards: rewardReactions,
+    games: gameReactions,
   };
   const panelReactionNames = [
     'laugh', 'tear_laugh', 'Kissing', 'crying', 'grimacing',
