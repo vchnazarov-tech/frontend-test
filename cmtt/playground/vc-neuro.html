@@ -671,6 +671,46 @@
     box-shadow: inset 0 0 0 1px rgb(218 218 218 / 31%);
   }
 
+  .neuro-variant-switch {
+    display: flex;
+    padding: 2px;
+    border-radius: 16px;
+    background: var(--theme-color-field-background-default);
+    font-size: 13px;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+
+  .neuro-variant-switch label {
+    position: relative;
+  }
+
+  .neuro-variant-switch input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .neuro-variant-switch span {
+    display: block;
+    padding: 5px 8px;
+    border-radius: 14px;
+    cursor: pointer;
+  }
+
+  .neuro-variant-switch input:checked + span {
+    color: #fff;
+    background: #000;
+  }
+
+  .neuro-variant-switch input:focus-visible + span {
+    outline: 2px solid var(--theme-color-signal-active-default);
+    outline-offset: -2px;
+  }
+
   .neuro-toolbar__actions,
   .neuro-compose__actions,
   .neuro-compose__right {
@@ -795,6 +835,10 @@
     box-shadow: var(--theme-shadow-field);
   }
 
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-compose {
+    --neuro-attachment-size: 60px;
+  }
+
   .neuro-attachments-panel {
     display: grid;
     grid-template-rows: 0fr;
@@ -828,14 +872,16 @@
   }
 
   .neuro-attachment:not([data-kind="video"]) .attachment__duration,
-  .neuro-attachment[data-uploading] .attachment__duration,
-  .neuro-panel .neuro-attachment:not([data-kind="file"]) .neuro-attachment__file-icon {
+  .neuro-panel:not(:has(#neuro-variant-3:checked)) .neuro-attachment[data-uploading] .attachment__duration,
+  .neuro-attachment:not([data-kind="file"]) .neuro-attachment__file-art,
+  .neuro-attachment__filesize {
     display: none;
   }
 
   .neuro-attachment {
     --neuro-attachment-inset: 4px;
     --neuro-attachment-border-width: 0px;
+    --neuro-attachment-action-offset: calc(-6px - var(--neuro-attachment-border-width));
     --neuro-attachment-border-color: rgb(0 0 0 / 10%);
     --neuro-attachment-radius: 16px;
     position: relative;
@@ -892,6 +938,10 @@
     color: #595959;
   }
 
+  .neuro-attachment__file-art {
+    width: 18px;
+  }
+
   .neuro-attachment__filename {
     display: block;
     max-width: 100%;
@@ -930,17 +980,19 @@
     border-radius: 8px;
     opacity: 1;
     font-family: Roboto, system-ui, sans-serif;
-    font-size: 13px;
+    font-size: 11px;
+    font-weight: 400;
     line-height: 16px;
     letter-spacing: 0;
+    padding: 3px 6px 2px;
     pointer-events: none;
   }
 
   .neuro-panel .neuro-attachment__action {
     position: absolute;
     z-index: 1;
-    top: calc(-6px - var(--neuro-attachment-border-width));
-    right: calc(-6px - var(--neuro-attachment-border-width));
+    top: var(--neuro-attachment-action-offset);
+    right: var(--neuro-attachment-action-offset);
     display: grid;
     place-items: center;
     width: 24px;
@@ -976,7 +1028,7 @@
     outline-offset: -2px;
   }
 
-  .neuro-panel .neuro-attachment[data-uploading] .neuro-attachment__action {
+  .neuro-panel:not(:has(#neuro-variant-3:checked)) .neuro-attachment[data-uploading] .neuro-attachment__action {
     inset: 0;
     width: 100%;
     height: 100%;
@@ -998,6 +1050,85 @@
 
   .neuro-attachment__progress-value {
     stroke-linecap: round;
+  }
+
+  .neuro-panel:has(#neuro-variant-3:checked) .neuro-attachment__cancel-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .neuro-panel:has(#neuro-variant-3:checked) .neuro-attachment__progress {
+    width: 22px;
+    height: 22px;
+  }
+
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-attachment[data-kind="file"] {
+    --neuro-file-inset: 10px;
+    --neuro-file-art-size: 36px;
+    flex-basis: 200px;
+    padding: 0 var(--neuro-file-inset);
+  }
+
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-attachment[data-kind="file"] .neuro-attachment__details {
+    display: grid;
+    grid-template-columns: var(--neuro-file-art-size) minmax(0, 1fr);
+    align-content: center;
+    align-items: center;
+    justify-items: start;
+    gap: 0 8px;
+  }
+
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-attachment[data-kind="file"] .neuro-attachment__file-art {
+    display: grid;
+    grid-row: span 2;
+    width: var(--neuro-file-art-size);
+    height: var(--neuro-file-art-size);
+    place-items: center;
+    background: #e0e0e0;
+    border-radius: 50%;
+  }
+
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-attachment__file-icon {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
+
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-attachment[data-kind="file"] .neuro-attachment__filename {
+    width: 100%;
+    font-size: 15px;
+    line-height: 20px;
+  }
+
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-attachment[data-kind="file"] .neuro-attachment__filesize {
+    display: block;
+    color: #000;
+    font: 400 13px/18px Roboto, system-ui, sans-serif;
+  }
+
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-attachment[data-kind="file"][data-uploading] .neuro-attachment__action {
+    color: #595959;
+    background: transparent;
+  }
+
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-attachment[data-kind="file"][data-uploading] :is(.neuro-attachment__file-icon, .neuro-attachment__cancel-icon, .neuro-attachment__progress > circle) {
+    display: none;
+  }
+
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-attachment[data-kind="file"] .neuro-attachment__progress {
+    right: auto;
+    left: var(--neuro-file-inset);
+    width: var(--neuro-file-art-size);
+    height: 16px;
+    overflow: visible;
+    stroke-width: 4;
+    transform-origin: center;
+    animation: spin .8s linear infinite;
+  }
+
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-attachment[data-kind="file"] .neuro-attachment__progress-value {
+    stroke-dasharray: 70 100;
+    stroke-dashoffset: 0;
   }
 
   .neuro-compose__input {
@@ -1107,6 +1238,19 @@
       line-height: 28px;
     }
   }
+
+  @media (max-width: 450px) {
+    .neuro-toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      row-gap: 8px;
+    }
+
+    .neuro-variant-switch {
+      grid-area: 2 / 1 / 3 / -1;
+      justify-self: center;
+    }
+  }
 </style>
 </head>
 
@@ -1118,6 +1262,21 @@
       <button class="neuro-toolbar__history neuro-toolbar__pill" type="button" aria-label="Открыть список чатов" disabled>
         <svg width="20" height="20" aria-hidden="true"><use href="#sprite-sidebar_toggle"></use></svg>
       </button>
+
+      <div class="neuro-variant-switch" role="group" aria-label="Вариант вложений">
+        <label>
+          <input id="neuro-variant-1" name="neuro-variant" type="radio" checked>
+          <span>Вариант 1</span>
+        </label>
+        <label>
+          <input id="neuro-variant-2" name="neuro-variant" type="radio">
+          <span>Вариант 2</span>
+        </label>
+        <label>
+          <input id="neuro-variant-3" name="neuro-variant" type="radio">
+          <span>Вариант 3</span>
+        </label>
+      </div>
 
       <div class="neuro-toolbar__actions neuro-toolbar__pill">
         <span class="neuro-toolbar__feedback" role="img" aria-label="Обратная связь">
@@ -1213,8 +1372,11 @@
       <template id="neuro-attachment-template">
         <li class="neuro-attachment">
           <span class="neuro-attachment__details">
-            <svg class="neuro-attachment__file-icon icon" width="24" height="24" aria-hidden="true"><use href="#sprite-file"></use></svg>
+            <span class="neuro-attachment__file-art">
+              <svg class="neuro-attachment__file-icon icon" width="24" height="24" aria-hidden="true"><use href="#sprite-file"></use></svg>
+            </span>
             <span class="neuro-attachment__filename"></span>
+            <span class="neuro-attachment__filesize"></span>
           </span>
           <span class="attachment__duration" role="img" aria-label="Видео, 18 секунд">0:18</span>
           <button class="neuro-attachment__action" type="button">
@@ -1258,16 +1420,45 @@
   const attachmentMenu = document.querySelector('#neuro-attach-menu');
   const attachmentList = document.querySelector('.neuro-attachments');
   const attachmentTemplate = document.querySelector('#neuro-attachment-template');
+  const variantSwitch = document.querySelector('.neuro-variant-switch');
+  const attachmentMoves = new WeakMap();
   const simulatedUploadDuration = 2000;
   const demoMedia = '../vcru/vc.ru — бизнес, технологии, идеи, модели роста, стартапы_files/';
   const demoAttachments = {
-    file: { name: 'Название файла.pdf' },
+    file: { name: 'Название файла.pdf', size: '2 Мб' },
     image: { name: 'Фото.jpg', previewUrl: demoMedia + 'saved_resource(24)' },
     video: { name: 'Видео.mp4', previewUrl: demoMedia + 'saved_resource(35)' },
   };
 
+  function removeAttachment(attachment) {
+    const positions = Array.from(attachmentList.children)
+      .filter(item => item !== attachment)
+      .map(item => ({ item, left: item.getBoundingClientRect().left }));
+
+    for (const item of attachmentList.children) {
+      attachmentMoves.get(item)?.cancel();
+    }
+    attachment.remove();
+
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const moves = positions.map(({ item, left }) => ({
+      item,
+      offset: left - item.getBoundingClientRect().left,
+    }));
+
+    for (const { item, offset } of moves) {
+      if (offset === 0) continue;
+      const animation = item.animate(
+        [{ transform: `translateX(${offset}px)` }, { transform: 'translateX(0)' }],
+        { duration: 100, easing: 'ease-out' },
+      );
+      attachmentMoves.set(item, animation);
+    }
+  }
+
   function addAttachment(kind) {
-    const { name, previewUrl } = demoAttachments[kind];
+    const { name, previewUrl, size = '' } = demoAttachments[kind];
     const attachment = attachmentTemplate.content.firstElementChild.cloneNode(true);
     const action = attachment.querySelector('.neuro-attachment__action');
     const progressRing = action.querySelector('.neuro-attachment__progress-value');
@@ -1275,6 +1466,7 @@
     attachment.dataset.uploading = '';
     attachment.dataset.kind = kind;
     attachment.querySelector('.neuro-attachment__filename').textContent = name;
+    attachment.querySelector('.neuro-attachment__filesize').textContent = size;
     action.title = 'Отменить загрузку';
     action.setAttribute('aria-label', `Отменить загрузку «${name}»`);
 
@@ -1294,6 +1486,8 @@
     let frame = requestAnimationFrame(updateProgress);
 
     function updateProgress(now) {
+      if (!attachment.isConnected) return;
+
       const timeFraction = Math.max(0, (now - startedAt) / simulatedUploadDuration);
       if (timeFraction < 1) {
         const progress = 1 - (1 - timeFraction) ** 2;
@@ -1303,14 +1497,15 @@
       }
 
       delete attachment.dataset.uploading;
-      action.title = 'Удалить вложение';
-      action.setAttribute('aria-label', `Удалить вложение «${name}»`);
+      const deleteLabel = kind === 'file' ? 'Удалить файл' : 'Удалить вложение';
+      action.title = deleteLabel;
+      action.setAttribute('aria-label', `${deleteLabel} «${name}»`);
     }
 
     action.addEventListener('click', () => {
       const focused = document.activeElement === action;
       cancelAnimationFrame(frame);
-      attachment.remove();
+      removeAttachment(attachment);
       if (focused) attachButton.focus({ preventScroll: true });
     });
   }
@@ -1319,6 +1514,8 @@
     attachmentMenu.hidden = !open;
     attachButton.setAttribute('aria-expanded', String(open));
   }
+
+  variantSwitch.addEventListener('change', () => attachmentList.replaceChildren());
 
   attachButton.addEventListener('click', () => setAttachmentMenuOpen(attachmentMenu.hidden));
 
