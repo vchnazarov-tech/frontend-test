@@ -646,6 +646,199 @@
 <!-- Экспериментальные стили только для этой страницы. -->
 <style id="feature-styles">
 
+  .neuro-mobile-search {
+    display: none;
+  }
+
+  .neuro-search[hidden],
+  .neuro-search [hidden] {
+    display: none;
+  }
+
+  .bar--top .header:has(.quick-search-wrapper) {
+    position: relative;
+    transform: none;
+  }
+
+  .neuro-search .quick-search__underlay {
+    inset: 0;
+  }
+
+  .neuro-search__form {
+    margin: 0;
+  }
+
+  .neuro-search .field {
+    --iconLeftMarginRight: 12px;
+  }
+
+  .neuro-search .field__wrapper {
+    border: 0;
+    border-radius: 24px;
+    padding-inline: 20px;
+  }
+
+  .neuro-search .text-input {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .neuro-search__ask-ai {
+    --ask-ai-trace-color: #e55c78;
+    --ask-ai-trace-lap: 1.4s;
+    --ask-ai-trace-duration: calc(2 * var(--ask-ai-trace-lap));
+    --ask-ai-trace-delay: 300ms;
+    position: relative;
+    isolation: isolate;
+    appearance: none;
+    flex: none;
+    min-width: 95px;
+    padding: 5px 10px;
+    border: 0;
+    border-radius: 999px;
+    box-shadow: none;
+    background: #f4f4f4;
+    color: #000;
+    background-color: color-mix(in oklab, #f4f4f4, #ffe5eb var(--neuro-ask-ai-trace-strength, 0%));
+    color: color-mix(in oklab, #000, var(--ask-ai-trace-color) var(--neuro-ask-ai-trace-strength, 0%));
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  @property --neuro-ask-ai-trace-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @property --neuro-ask-ai-trace-strength {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 0%;
+  }
+
+  /* Border trace adapted from CodeFronts (MIT).
+     https://codefronts.com/components/css-glowing-border-buttons/pure-css-animated-border-trace-button/ */
+  .neuro-search__ask-ai::before,
+  .neuro-search__ask-ai::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    padding: 2px;
+    border-radius: inherit;
+    background: conic-gradient(from var(--neuro-ask-ai-trace-angle),
+      transparent 0 82%, color-mix(in oklab, var(--ask-ai-trace-color) 45%, transparent) 88%,
+      var(--ask-ai-trace-color) 93%, transparent 97%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: var(--neuro-ask-ai-trace-strength, 0%);
+    pointer-events: none;
+  }
+
+  .neuro-search__ask-ai::after {
+    inset: -3px;
+    padding: 4px;
+    filter: blur(8px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports ((mask-composite: exclude) or (-webkit-mask-composite: xor)) {
+      .neuro-search:not([hidden]) .neuro-search__ask-ai {
+        animation: neuro-ask-ai-trace-fade var(--ask-ai-trace-duration) ease-in-out var(--ask-ai-trace-delay) both;
+      }
+
+      .neuro-search:not([hidden]) .neuro-search__ask-ai::before,
+      .neuro-search:not([hidden]) .neuro-search__ask-ai::after {
+        animation: neuro-ask-ai-trace-lap var(--ask-ai-trace-lap) linear var(--ask-ai-trace-delay) 2;
+      }
+    }
+  }
+
+  @keyframes neuro-ask-ai-trace-lap {
+    to { --neuro-ask-ai-trace-angle: 360deg; }
+  }
+
+  @keyframes neuro-ask-ai-trace-fade {
+    from, to { --neuro-ask-ai-trace-strength: 0%; }
+    12%, 88% { --neuro-ask-ai-trace-strength: 100%; }
+  }
+
+  .neuro-search .field__icon--clickable:not([hidden]) {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+  }
+
+  .neuro-search .quick-search__dropdown {
+    --popover-top: calc(100% + 10px);
+  }
+
+  .neuro-search .popover__surface {
+    max-height: calc(100dvh - var(--layout-header-height) - 10px);
+    overflow-y: auto;
+    border-radius: 24px;
+  }
+
+  .neuro-search .quick-search-dropdown {
+    padding-bottom: 10px;
+  }
+
+  .neuro-search .quick-search-dropdown__heading {
+    padding-inline: 8px;
+  }
+
+  .neuro-search .quick-search-dropdown__list {
+    gap: 0;
+  }
+
+  .neuro-search .context-list-option {
+    width: 100%;
+    text-align: left;
+  }
+
+  .neuro-search .quick-search-dropdown__list .context-list-option {
+    --option-art-size: 20px;
+    --option-inner-gap: 12px;
+    --option-inner-offset-x: 8px;
+    --option-inner-offset-y: 8px;
+    border-radius: 18px;
+  }
+
+  .neuro-search .context-list-option:focus-visible {
+    background: var(--theme-color-popover-item-bg-active);
+  }
+
+  @media (max-width: 924px) {
+    .bar--top .header__main.quick-search-wrapper {
+      position: absolute;
+      inset: 0 16px;
+      display: flex;
+      align-items: center;
+      width: auto;
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .bar--top .neuro-mobile-search {
+      display: flex;
+      grid-area: back;
+      justify-self: start;
+      width: 36px;
+      margin-left: 24px;
+    }
+  }
+
+
   .neuro-mobile-back,
   .neuro-mobile-open {
     display: none;
@@ -1367,11 +1560,58 @@
   <a class="neuro-mobile-back" href="https://vc.ru/" aria-label="На главную vc.ru">
     <svg width="24" height="24" aria-hidden="true"><use href="#sprite-chevron_left_big"></use></svg>
   </a>
+  <button class="quick-search-button neuro-mobile-search" type="button" aria-label="Поиск" aria-haspopup="dialog" aria-controls="neuro-search" aria-expanded="false">
+    <svg class="icon icon--search_enhanced" width="22" height="22" aria-hidden="true"><use href="#sprite-search_enhanced"></use></svg>
+  </button>
   <a class="neuro-mobile-open" href="https://vc.ru/apps">
     <svg width="14" height="14" aria-hidden="true"><use href="#sprite-google_play_bw"></use></svg>
     Открыть
   </a>
-<div class="header__left"><a class="header__logo" href="https://vc.ru/" data-router-link=""><!--[--><span><svg viewBox="0 404.142 36 33.608" width="30" height="32" xmlns="http://www.w3.org/2000/svg"><path d="M28.813 419.643c2.65 0 4.645-1.104 6.116-3.026l-1.966-1.5a5.188 5.188 0 0 1-4.15 2.052c-2.876 0-4.96-2.343-4.96-5.218s2.05-5.35 5.042-5.35c1.33 0 2.27.314 3.09.822v2.528h2.474v-3.686l-.474-.373c-1.36-1.07-3.437-1.638-5.173-1.638-4.244 0-7.696 3.452-7.696 7.696 0 4.24 3.45 7.693 7.696 7.693zm5.133 15.18-.088-3.543v-8.646h-5.16v2.475h2.554v5.866c0 2.527-1.93 4.316-3.877 4.316s-2.963-1.35-2.963-3.876v-8.782h-4.82v2.475h2.214v6.736c0 3.428 1.922 5.79 5.35 5.79 1.97 0 3.47-1.093 4.365-2.778h.04l.353 2.356h3.965v-2.386h-1.93v-.005zm-13.4-30.206h-4.3l-3.74 10.86h-.058l-3.72-10.86H4.146v2.476h2.577l4.435 12.378h2.356v-.003l4.625-12.374h2.405v-2.476zM.122 437.244H2.67v-2.547H.123v2.547zm9.84-11.74h-.028l-.16-2.87H5.226v2.256h2.42v9.934h-2.42v2.387h11.24v-2.34h-6.258v-5.995c.283-2.17 1.91-4.023 4.13-4.023h.04l-.045 2.218h2.474v-4.478h-1.956c-2.24-.006-3.902 1.206-4.89 2.912z"></path></svg></span><!--]--></a><div class="lZiytKLX" style="width: 100%; border-radius: var(--layout-island-border-radius); height: auto;"><!----><!----><div id="djznIbJAvsM9o23o" class="ZVB9w3pL"></div><div class="_1wLUQ2Hw"><!----></div></div></div><div class="header__main"><!----></div><div class="header__right"><button class="quick-search-button"><svg class="icon icon--search_enhanced" width="24" height="24"><use xlink:href="#sprite-search_enhanced"></use></svg></button><!----><div class="bell"><button class="bell__button"><svg class="icon icon--bell bell__button-icon" width="24" height="24"><use xlink:href="#sprite-bell"></use></svg><!----></button><!----></div><a href="https://vc.ru/editor" class="" data-router-link="" data-gtm-click="[&quot;Header — Write&quot;]"><button class="button button--size-l button--type-secondary button--with-icon button--rounded" type="button"><svg class="icon icon--pen" width="24" height="24"><use xlink:href="#sprite-pen"></use></svg>Написать</button></a><div class="account-button"><div class="account-button__inner"><div data-loaded="true" class="andropov-media andropov-media--rounded andropov-media--bordered andropov-media--has-preview andropov-image" style="aspect-ratio: 1 / 1; width: 40px; height: 40px; max-width: none; --background-color: #958287;"><div class="andropov-media__thumbnail" style="background-image: url(&quot;data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAAKAAoDAREAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABwj/xAAjEAACAgIBBAIDAAAAAAAAAAABAgMEBREGAAcSIQgTFUFR/8QAGAEAAgMAAAAAAAAAAAAAAAAABAUAAgb/xAAgEQACAgICAgMAAAAAAAAAAAABAgADBBETQRIhFCIx/9oADAMBAAIRAxEAPwBj+RndzLyd9KFriPKMq8OIjrT0fx2QljhjAHlKZIQv1yq3sN5b9fzQ6lzmr669w3Cxa76+RpS9L5B4B6Vd72CzS2WiQzLFSZkD6HkFP7G96PRC0sQDFFl1aOVHRhFyrE4uXm2Ysy42q8z8cuq0jQqWYeGtE62emWeq8ynXUtis3xWG+xJ6q5LIxVYYor9lESNVVVlYAAD0AN9Z42Pv9hT1p5H0J//Z&quot;);"></div><picture><img src="../vcru/vc.ru — бизнес, технологии, идеи, модели роста, стартапы_files/saved_resource" alt="" loading="lazy"></picture></div><svg class="icon icon--chevron_down" width="20" height="20"><use xlink:href="#sprite-chevron_down"></use></svg></div><!----></div></div></div></div></div><div class="layout-wrapper"><div class="layout"><div class="aside aside--left"><div class="scrollable" data-overlayscrollbars-initialize="" data-overlayscrollbars="host"><div class="" data-overlayscrollbars-viewport="scrollbarHidden overflowXHidden overflowYHidden" tabindex="-1" data-scrollable="" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; top: 0px; right: auto; left: 0px; width: calc(100% + 0px); padding: 0px;"><!--[--><div class="sidebar"><!--[--><div class="sidebar__section"><!----><div class="sidebar__section-content"><!--[--><a href="https://vc.ru/popular" class="sidebar-item" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — Popular&quot;]"><!--[--><svg class="icon icon--feed" width="24" height="24"><use xlink:href="#sprite-feed"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Популярное <!----></span><!----><!----></div><!----><!--]--></a><a href="https://vc.ru/new" class="sidebar-item" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — New&quot;]"><!--[--><svg class="icon icon--clock" width="24" height="24"><use xlink:href="#sprite-clock"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Свежее <!----></span><!----><!----></div><!----><!--]--></a><a href="https://vc.ru/my" class="sidebar-item" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — My&quot;]"><!--[--><svg class="icon icon--my_feed" width="24" height="24"><use xlink:href="#sprite-my_feed"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Моя лента <!----></span><!----><!----></div><!----><!--]--></a><a href="https://vc.ru/m" class="sidebar-item" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — Messenger&quot;]"><!--[--><svg class="icon icon--messenger" width="24" height="24"><use xlink:href="#sprite-messenger"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Сообщения <!----></span><!----><!----></div><!----><!--]--></a><a href="https://vc.ru/discovery" class="sidebar-item" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — Discovery&quot;]"><!--[--><svg class="icon icon--discovery" width="24" height="24"><use xlink:href="#sprite-discovery"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Рейтинг <!----></span><!----><!----></div><!----><!--]--></a><a to="https://edu.vc.ru/chatgpt" href="https://edu.vc.ru/chatgpt" target="_blank" class="sidebar-item" data-ripple="" data-gtm-click="[&quot;Sidebar — Edu ChatGPT course&quot;]"><img src="../vcru/vc.ru — бизнес, технологии, идеи, модели роста, стартапы_files/saved_resource(1)" class="sidebar-item__image"><div class="sidebar-item__text"><span class="sidebar-item__label">Курс ИИ <svg class="icon icon--arrow_up_right sidebar-item__trailing-icon" width="16" height="16"><use xlink:href="#sprite-arrow_up_right"></use></svg></span><!----><!----></div><!----></a><!--]--></div></div><div class="sidebar__section"><button class="sidebar__title sidebar__title--collapsible" type="button" data-section="services"><span>Сервисы</span><span class="h6EBfzHf sidebar__title-chevron" data-state="b"><span class="sPsHQ8tA" data-layer="a" aria-hidden="true"><!--[--><svg class="icon icon--chevron_right" width="16" height="16"><use xlink:href="#sprite-chevron_right"></use></svg><!--]--></span><span class="sPsHQ8tA" data-layer="b" aria-hidden="false"><!--[--><svg class="icon icon--chevron_down" width="16" height="16"><use xlink:href="#sprite-chevron_down"></use></svg><!--]--></span></span></button><div class="sidebar__section-content"><!--[--><a href="./vc-neuro.html" class="sidebar-item sidebar-item--active" aria-current="page" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — Terminal&quot;]"><svg class="icon icon--comment_neuro" width="24" height="24"><use xlink:href="#sprite-comment_neuro"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Нейро <!----></span><!----><div class="sidebar-item__sublabel">ChatGPT и Claude</div></div><!----></a><a to="https://edu.vc.ru" href="https://edu.vc.ru/" target="_blank" class="sidebar-item" data-ripple="" data-gtm-click="[&quot;Sidebar — Courses&quot;]"><svg class="icon icon--courses" width="24" height="24"><use xlink:href="#sprite-courses"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Обучение <svg class="icon icon--arrow_up_right sidebar-item__trailing-icon" width="16" height="16"><use xlink:href="#sprite-arrow_up_right"></use></svg></span><!----><!----></div><!----></a><a href="https://vc.ru/store" class="sidebar-item" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — Store&quot;]"><!--[--><svg class="icon icon--marketplace" width="24" height="24"><use xlink:href="#sprite-marketplace"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Маркет <!----></span><div class="sidebar-item__success-text">Зарубежные сервисы</div><!----></div><!----><!--]--></a><!--]--></div></div><!--]--><div class="sidebar__section"><button class="sidebar__title--collapsed sidebar__title sidebar__title--collapsible" type="button" data-section="games"><span>Игры</span><span class="h6EBfzHf sidebar__title-chevron" data-state="a"><span class="sPsHQ8tA" data-layer="a" aria-hidden="false"><!--[--><svg class="icon icon--chevron_right" width="16" height="16"><use xlink:href="#sprite-chevron_right"></use></svg><!--]--></span><span class="sPsHQ8tA" data-layer="b" aria-hidden="true"><!--[--><svg class="icon icon--chevron_down" width="16" height="16"><use xlink:href="#sprite-chevron_down"></use></svg><!--]--></span></span></button><!----></div><div class="sidebar__section"><button class="sidebar__title--collapsed sidebar__title sidebar__title--collapsible" type="button" data-section="topics"><span>Темы</span><span class="h6EBfzHf sidebar__title-chevron" data-state="a"><span class="sPsHQ8tA" data-layer="a" aria-hidden="false"><!--[--><svg class="icon icon--chevron_right" width="16" height="16"><use xlink:href="#sprite-chevron_right"></use></svg><!--]--></span><span class="sPsHQ8tA" data-layer="b" aria-hidden="true"><!--[--><svg class="icon icon--chevron_down" width="16" height="16"><use xlink:href="#sprite-chevron_down"></use></svg><!--]--></span></span></button><!----></div><div class="sidebar__section"><button class="sidebar__title--collapsed sidebar__title sidebar__title--collapsible" type="button" data-section="footer"><span>vc.ru</span><span class="h6EBfzHf sidebar__title-chevron" data-state="a"><span class="sPsHQ8tA" data-layer="a" aria-hidden="false"><!--[--><svg class="icon icon--chevron_right" width="16" height="16"><use xlink:href="#sprite-chevron_right"></use></svg><!--]--></span><span class="sPsHQ8tA" data-layer="b" aria-hidden="true"><!--[--><svg class="icon icon--chevron_down" width="16" height="16"><use xlink:href="#sprite-chevron_down"></use></svg><!--]--></span></span></button><!----></div></div><!--]--></div><div class="os-scrollbar os-scrollbar-horizontal os-theme-custom os-scrollbar-auto-hide os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-unusable os-scrollbar-auto-hide-hidden" style="--os-viewport-percent: 1; --os-scroll-direction: 0;"><div class="os-scrollbar-track"><div class="os-scrollbar-handle"></div></div></div><div class="os-scrollbar os-scrollbar-vertical os-theme-custom os-scrollbar-auto-hide os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-unusable os-scrollbar-auto-hide-hidden" style="--os-viewport-percent: 1; --os-scroll-direction: 0;"><div class="os-scrollbar-track"><div class="os-scrollbar-handle"></div></div></div></div></div>
+<div class="header__left"><a class="header__logo" href="https://vc.ru/" data-router-link=""><!--[--><span><svg viewBox="0 404.142 36 33.608" width="30" height="32" xmlns="http://www.w3.org/2000/svg"><path d="M28.813 419.643c2.65 0 4.645-1.104 6.116-3.026l-1.966-1.5a5.188 5.188 0 0 1-4.15 2.052c-2.876 0-4.96-2.343-4.96-5.218s2.05-5.35 5.042-5.35c1.33 0 2.27.314 3.09.822v2.528h2.474v-3.686l-.474-.373c-1.36-1.07-3.437-1.638-5.173-1.638-4.244 0-7.696 3.452-7.696 7.696 0 4.24 3.45 7.693 7.696 7.693zm5.133 15.18-.088-3.543v-8.646h-5.16v2.475h2.554v5.866c0 2.527-1.93 4.316-3.877 4.316s-2.963-1.35-2.963-3.876v-8.782h-4.82v2.475h2.214v6.736c0 3.428 1.922 5.79 5.35 5.79 1.97 0 3.47-1.093 4.365-2.778h.04l.353 2.356h3.965v-2.386h-1.93v-.005zm-13.4-30.206h-4.3l-3.74 10.86h-.058l-3.72-10.86H4.146v2.476h2.577l4.435 12.378h2.356v-.003l4.625-12.374h2.405v-2.476zM.122 437.244H2.67v-2.547H.123v2.547zm9.84-11.74h-.028l-.16-2.87H5.226v2.256h2.42v9.934h-2.42v2.387h11.24v-2.34h-6.258v-5.995c.283-2.17 1.91-4.023 4.13-4.023h.04l-.045 2.218h2.474v-4.478h-1.956c-2.24-.006-3.902 1.206-4.89 2.912z"></path></svg></span><!--]--></a><div class="lZiytKLX" style="width: 100%; border-radius: var(--layout-island-border-radius); height: auto;"><!----><!----><div id="djznIbJAvsM9o23o" class="ZVB9w3pL"></div><div class="_1wLUQ2Hw"><!----></div></div></div><div class="header__main">
+  <div id="neuro-search" class="quick-search neuro-search" role="dialog" aria-modal="true" aria-label="Поиск по vc.ru" hidden>
+    <div class="quick-search__underlay" aria-hidden="true"></div>
+    <div class="quick-search__container">
+      <form class="neuro-search__form" role="search" action="https://vc.ru/search/v2/content/relevant" method="get">
+        <div class="field field--large field--focused">
+          <div class="field__wrapper">
+            <div class="field__wrapper-body">
+              <svg class="icon icon--search_enhanced field__icon field__icon--left" width="22" height="22" aria-hidden="true"><use href="#sprite-search_enhanced"></use></svg>
+              <input class="text-input" type="text" name="query" placeholder="Поиск" aria-label="Поиск" autocomplete="off" enterkeyhint="search">
+              <button class="field__icon field__icon--right field__icon--clickable" type="button" data-search-reset aria-label="Очистить поле поиска" hidden>
+                <svg class="icon icon--cross" width="22" height="22" aria-hidden="true"><use href="#sprite-cross"></use></svg>
+              </button>
+              <button class="neuro-search__ask-ai" type="button" disabled>Спросить AI</button>
+            </div>
+          </div>
+        </div>
+        <div class="popover quick-search__dropdown">
+          <div class="popover__surface">
+            <div class="quick-search-dropdown">
+              <section class="quick-search-dropdown__section" aria-labelledby="neuro-search-history-title" data-search-history>
+                <div class="quick-search-dropdown__heading">
+                  <div id="neuro-search-history-title" class="quick-search-dropdown__title">Последние запросы</div>
+                  <button class="link-button link-button--default" type="button" data-search-clear>Очистить</button>
+                </div>
+                <div class="quick-search-dropdown__list">
+                  <button class="context-list-option context-list-option--with-art" type="button" data-search-example="дизайн">
+                    <span class="context-list-option__art context-list-option__art--icon"><svg class="icon icon--search" width="20" height="20" aria-hidden="true"><use href="#sprite-search"></use></svg></span>
+                    <span class="context-list-option__label"><span>дизайн</span></span>
+                  </button>
+                </div>
+              </section>
+              <div class="quick-search-dropdown__section" data-search-results hidden>
+                <button class="context-list-option context-list-option--with-art" type="submit">
+                  <span class="context-list-option__art context-list-option__art--icon"><svg class="icon icon--enter" width="20" height="20" aria-hidden="true"><use href="#sprite-enter"></use></svg></span>
+                  <span class="context-list-option__label"><span>Перейти ко всем результатам</span></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div><div class="header__right"><button class="quick-search-button" type="button" aria-label="Поиск" aria-haspopup="dialog" aria-controls="neuro-search" aria-expanded="false"><svg class="icon icon--search_enhanced" width="24" height="24"><use xlink:href="#sprite-search_enhanced"></use></svg></button><!----><div class="bell"><button class="bell__button"><svg class="icon icon--bell bell__button-icon" width="24" height="24"><use xlink:href="#sprite-bell"></use></svg><!----></button><!----></div><a href="https://vc.ru/editor" class="" data-router-link="" data-gtm-click="[&quot;Header — Write&quot;]"><button class="button button--size-l button--type-secondary button--with-icon button--rounded" type="button"><svg class="icon icon--pen" width="24" height="24"><use xlink:href="#sprite-pen"></use></svg>Написать</button></a><div class="account-button"><div class="account-button__inner"><div data-loaded="true" class="andropov-media andropov-media--rounded andropov-media--bordered andropov-media--has-preview andropov-image" style="aspect-ratio: 1 / 1; width: 40px; height: 40px; max-width: none; --background-color: #958287;"><div class="andropov-media__thumbnail" style="background-image: url(&quot;data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAAKAAoDAREAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABwj/xAAjEAACAgIBBAIDAAAAAAAAAAABAgMEBREGAAcSIQgTFUFR/8QAGAEAAgMAAAAAAAAAAAAAAAAABAUAAgb/xAAgEQACAgICAgMAAAAAAAAAAAABAgADBBETQRIhFCIx/9oADAMBAAIRAxEAPwBj+RndzLyd9KFriPKMq8OIjrT0fx2QljhjAHlKZIQv1yq3sN5b9fzQ6lzmr669w3Cxa76+RpS9L5B4B6Vd72CzS2WiQzLFSZkD6HkFP7G96PRC0sQDFFl1aOVHRhFyrE4uXm2Ysy42q8z8cuq0jQqWYeGtE62emWeq8ynXUtis3xWG+xJ6q5LIxVYYor9lESNVVVlYAAD0AN9Z42Pv9hT1p5H0J//Z&quot;);"></div><picture><img src="../vcru/vc.ru — бизнес, технологии, идеи, модели роста, стартапы_files/saved_resource" alt="" loading="lazy"></picture></div><svg class="icon icon--chevron_down" width="20" height="20"><use xlink:href="#sprite-chevron_down"></use></svg></div><!----></div></div></div></div></div><div class="layout-wrapper"><div class="layout"><div class="aside aside--left"><div class="scrollable" data-overlayscrollbars-initialize="" data-overlayscrollbars="host"><div class="" data-overlayscrollbars-viewport="scrollbarHidden overflowXHidden overflowYHidden" tabindex="-1" data-scrollable="" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; top: 0px; right: auto; left: 0px; width: calc(100% + 0px); padding: 0px;"><!--[--><div class="sidebar"><!--[--><div class="sidebar__section"><!----><div class="sidebar__section-content"><!--[--><a href="https://vc.ru/popular" class="sidebar-item" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — Popular&quot;]"><!--[--><svg class="icon icon--feed" width="24" height="24"><use xlink:href="#sprite-feed"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Популярное <!----></span><!----><!----></div><!----><!--]--></a><a href="https://vc.ru/new" class="sidebar-item" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — New&quot;]"><!--[--><svg class="icon icon--clock" width="24" height="24"><use xlink:href="#sprite-clock"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Свежее <!----></span><!----><!----></div><!----><!--]--></a><a href="https://vc.ru/my" class="sidebar-item" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — My&quot;]"><!--[--><svg class="icon icon--my_feed" width="24" height="24"><use xlink:href="#sprite-my_feed"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Моя лента <!----></span><!----><!----></div><!----><!--]--></a><a href="https://vc.ru/m" class="sidebar-item" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — Messenger&quot;]"><!--[--><svg class="icon icon--messenger" width="24" height="24"><use xlink:href="#sprite-messenger"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Сообщения <!----></span><!----><!----></div><!----><!--]--></a><a href="https://vc.ru/discovery" class="sidebar-item" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — Discovery&quot;]"><!--[--><svg class="icon icon--discovery" width="24" height="24"><use xlink:href="#sprite-discovery"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Рейтинг <!----></span><!----><!----></div><!----><!--]--></a><a to="https://edu.vc.ru/chatgpt" href="https://edu.vc.ru/chatgpt" target="_blank" class="sidebar-item" data-ripple="" data-gtm-click="[&quot;Sidebar — Edu ChatGPT course&quot;]"><img src="../vcru/vc.ru — бизнес, технологии, идеи, модели роста, стартапы_files/saved_resource(1)" class="sidebar-item__image"><div class="sidebar-item__text"><span class="sidebar-item__label">Курс ИИ <svg class="icon icon--arrow_up_right sidebar-item__trailing-icon" width="16" height="16"><use xlink:href="#sprite-arrow_up_right"></use></svg></span><!----><!----></div><!----></a><!--]--></div></div><div class="sidebar__section"><button class="sidebar__title sidebar__title--collapsible" type="button" data-section="services"><span>Сервисы</span><span class="h6EBfzHf sidebar__title-chevron" data-state="b"><span class="sPsHQ8tA" data-layer="a" aria-hidden="true"><!--[--><svg class="icon icon--chevron_right" width="16" height="16"><use xlink:href="#sprite-chevron_right"></use></svg><!--]--></span><span class="sPsHQ8tA" data-layer="b" aria-hidden="false"><!--[--><svg class="icon icon--chevron_down" width="16" height="16"><use xlink:href="#sprite-chevron_down"></use></svg><!--]--></span></span></button><div class="sidebar__section-content"><!--[--><a href="./vc-neuro.html" class="sidebar-item sidebar-item--active" aria-current="page" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — Terminal&quot;]"><svg class="icon icon--comment_neuro" width="24" height="24"><use xlink:href="#sprite-comment_neuro"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Нейро <!----></span><!----><div class="sidebar-item__sublabel">ChatGPT и Claude</div></div><!----></a><a to="https://edu.vc.ru" href="https://edu.vc.ru/" target="_blank" class="sidebar-item" data-ripple="" data-gtm-click="[&quot;Sidebar — Courses&quot;]"><svg class="icon icon--courses" width="24" height="24"><use xlink:href="#sprite-courses"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Обучение <svg class="icon icon--arrow_up_right sidebar-item__trailing-icon" width="16" height="16"><use xlink:href="#sprite-arrow_up_right"></use></svg></span><!----><!----></div><!----></a><a href="https://vc.ru/store" class="sidebar-item" data-ripple="" data-router-link="" data-gtm-click="[&quot;Sidebar — Store&quot;]"><!--[--><svg class="icon icon--marketplace" width="24" height="24"><use xlink:href="#sprite-marketplace"></use></svg><div class="sidebar-item__text"><span class="sidebar-item__label">Маркет <!----></span><div class="sidebar-item__success-text">Зарубежные сервисы</div><!----></div><!----><!--]--></a><!--]--></div></div><!--]--><div class="sidebar__section"><button class="sidebar__title--collapsed sidebar__title sidebar__title--collapsible" type="button" data-section="games"><span>Игры</span><span class="h6EBfzHf sidebar__title-chevron" data-state="a"><span class="sPsHQ8tA" data-layer="a" aria-hidden="false"><!--[--><svg class="icon icon--chevron_right" width="16" height="16"><use xlink:href="#sprite-chevron_right"></use></svg><!--]--></span><span class="sPsHQ8tA" data-layer="b" aria-hidden="true"><!--[--><svg class="icon icon--chevron_down" width="16" height="16"><use xlink:href="#sprite-chevron_down"></use></svg><!--]--></span></span></button><!----></div><div class="sidebar__section"><button class="sidebar__title--collapsed sidebar__title sidebar__title--collapsible" type="button" data-section="topics"><span>Темы</span><span class="h6EBfzHf sidebar__title-chevron" data-state="a"><span class="sPsHQ8tA" data-layer="a" aria-hidden="false"><!--[--><svg class="icon icon--chevron_right" width="16" height="16"><use xlink:href="#sprite-chevron_right"></use></svg><!--]--></span><span class="sPsHQ8tA" data-layer="b" aria-hidden="true"><!--[--><svg class="icon icon--chevron_down" width="16" height="16"><use xlink:href="#sprite-chevron_down"></use></svg><!--]--></span></span></button><!----></div><div class="sidebar__section"><button class="sidebar__title--collapsed sidebar__title sidebar__title--collapsible" type="button" data-section="footer"><span>vc.ru</span><span class="h6EBfzHf sidebar__title-chevron" data-state="a"><span class="sPsHQ8tA" data-layer="a" aria-hidden="false"><!--[--><svg class="icon icon--chevron_right" width="16" height="16"><use xlink:href="#sprite-chevron_right"></use></svg><!--]--></span><span class="sPsHQ8tA" data-layer="b" aria-hidden="true"><!--[--><svg class="icon icon--chevron_down" width="16" height="16"><use xlink:href="#sprite-chevron_down"></use></svg><!--]--></span></span></button><!----></div></div><!--]--></div><div class="os-scrollbar os-scrollbar-horizontal os-theme-custom os-scrollbar-auto-hide os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-unusable os-scrollbar-auto-hide-hidden" style="--os-viewport-percent: 1; --os-scroll-direction: 0;"><div class="os-scrollbar-track"><div class="os-scrollbar-handle"></div></div></div><div class="os-scrollbar os-scrollbar-vertical os-theme-custom os-scrollbar-auto-hide os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-unusable os-scrollbar-auto-hide-hidden" style="--os-viewport-percent: 1; --os-scroll-direction: 0;"><div class="os-scrollbar-track"><div class="os-scrollbar-handle"></div></div></div></div></div>
 <div class="view">
   <main class="neuro-panel" aria-label="Нейро">
     <header class="neuro-toolbar">
@@ -1516,6 +1756,87 @@
 
 
 <script id="feature-script">
+
+  const searchDialog = document.querySelector('#neuro-search');
+  const searchTriggers = document.querySelectorAll('[aria-controls="neuro-search"]');
+  const searchForm = searchDialog.querySelector('form');
+  const searchInput = searchForm.elements.query;
+  const searchReset = searchDialog.querySelector('[data-search-reset]');
+  const searchHistory = searchDialog.querySelector('[data-search-history]');
+  const searchClear = searchDialog.querySelector('[data-search-clear]');
+  const searchExample = searchDialog.querySelector('[data-search-example]');
+  const searchResults = searchDialog.querySelector('[data-search-results]');
+  const searchDropdown = searchDialog.querySelector('.quick-search__dropdown');
+  let searchOpener;
+  let searchHistoryCleared = false;
+
+  function updateSearch() {
+    const hasQuery = searchInput.value.trim() !== '';
+    searchReset.hidden = searchInput.value === '';
+    searchHistory.hidden = hasQuery || searchHistoryCleared;
+    searchResults.hidden = !hasQuery;
+    searchDropdown.hidden = searchHistory.hidden && searchResults.hidden;
+  }
+
+  function closeSearch() {
+    searchDialog.hidden = true;
+    searchDialog.parentElement.classList.remove('quick-search-wrapper');
+    searchOpener.setAttribute('aria-expanded', 'false');
+    searchOpener.focus();
+  }
+
+  for (const trigger of searchTriggers) {
+    trigger.addEventListener('click', () => {
+      searchOpener = trigger;
+      trigger.setAttribute('aria-expanded', 'true');
+      searchInput.value = '';
+      updateSearch();
+      searchDialog.parentElement.classList.add('quick-search-wrapper');
+      searchDialog.hidden = false;
+      searchInput.focus();
+    });
+  }
+
+  searchDialog.querySelector('.quick-search__underlay').addEventListener('click', closeSearch);
+  searchInput.addEventListener('input', updateSearch);
+  searchReset.addEventListener('click', () => {
+    searchInput.value = '';
+    updateSearch();
+    searchInput.focus();
+  });
+  searchClear.addEventListener('click', () => {
+    searchHistoryCleared = true;
+    updateSearch();
+    searchInput.focus();
+  });
+  searchExample.addEventListener('click', () => {
+    searchInput.value = searchExample.dataset.searchExample;
+    searchForm.requestSubmit();
+  });
+  searchForm.addEventListener('submit', event => {
+    searchInput.value = searchInput.value.trim();
+    if (!searchInput.value) {
+      event.preventDefault();
+      updateSearch();
+    }
+  });
+  searchDialog.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeSearch();
+    }
+
+    if (event.key === 'Tab') {
+      const controls = [...searchDialog.querySelectorAll('input:not(:disabled), button:not(:disabled)')]
+        .filter(control => !control.closest('[hidden]'));
+      const edge = event.shiftKey ? controls[0] : controls.at(-1);
+      if (document.activeElement === edge) {
+        event.preventDefault();
+        (event.shiftKey ? controls.at(-1) : controls[0]).focus();
+      }
+    }
+  });
+
   if (!CSS.supports('field-sizing', 'content')) {
     const input = document.querySelector('.neuro-compose__input');
 
