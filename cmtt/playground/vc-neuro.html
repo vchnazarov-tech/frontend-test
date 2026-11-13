@@ -1073,6 +1073,16 @@
     padding-top: 6px;
   }
 
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-attachments-panel:has(.neuro-attachment) {
+    margin-top: 18px;
+    margin-bottom: 4px;
+  }
+
+  .neuro-panel:has(#neuro-variant-2:checked) .neuro-attachments {
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+
   .neuro-attachment:not([data-kind="video"]) .attachment__duration,
   .neuro-panel:not(:has(#neuro-variant-3:checked)) .neuro-attachment[data-uploading] .attachment__duration,
   .neuro-attachment:not([data-kind="file"]) .neuro-attachment__file-art,
@@ -2017,7 +2027,23 @@
     attachButton.setAttribute('aria-expanded', String(open));
   }
 
-  variantSwitch.addEventListener('change', () => attachmentList.replaceChildren());
+  const attachmentPanel = attachmentList.closest('.neuro-attachments-panel');
+  const composeInput = attachmentPanel.parentElement.querySelector('.neuro-compose__input');
+
+  function updateAttachmentPlacement() {
+    if (variantSwitch.querySelector('#neuro-variant-2:checked')) {
+      composeInput.after(attachmentPanel);
+    } else {
+      composeInput.before(attachmentPanel);
+    }
+  }
+
+  updateAttachmentPlacement();
+
+  variantSwitch.addEventListener('change', () => {
+    attachmentList.replaceChildren();
+    updateAttachmentPlacement();
+  });
 
   attachButton.addEventListener('click', () => setAttachmentMenuOpen(attachmentMenu.hidden));
 
