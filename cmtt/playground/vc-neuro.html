@@ -644,200 +644,8 @@
         .supbar.supbar--top, .cookie-consent-banner { display: none !important; }
       </style>
 <!-- Экспериментальные стили только для этой страницы. -->
+<link rel="stylesheet" href="./blocks/vc-quick-search.css">
 <style id="feature-styles">
-
-  .neuro-mobile-search {
-    display: none;
-  }
-
-  .neuro-search[hidden],
-  .neuro-search [hidden] {
-    display: none;
-  }
-
-  .bar--top .header:has(.quick-search-wrapper) {
-    position: relative;
-    transform: none;
-  }
-
-  .neuro-search .quick-search__underlay {
-    inset: 0;
-  }
-
-  .neuro-search__form {
-    margin: 0;
-  }
-
-  .neuro-search .field {
-    --iconLeftMarginRight: 12px;
-  }
-
-  .neuro-search .field__wrapper {
-    border: 0;
-    border-radius: 24px;
-    padding-inline: 20px;
-  }
-
-  .neuro-search .text-input {
-    flex: 1 1 0;
-    min-width: 0;
-  }
-
-  .neuro-search__ask-ai {
-    --ask-ai-trace-color: #e55c78;
-    --ask-ai-trace-lap: 1.4s;
-    --ask-ai-trace-duration: calc(2 * var(--ask-ai-trace-lap));
-    --ask-ai-trace-delay: 300ms;
-    position: relative;
-    isolation: isolate;
-    appearance: none;
-    flex: none;
-    min-width: 95px;
-    padding: 5px 10px;
-    border: 0;
-    border-radius: 999px;
-    box-shadow: none;
-    background: #f4f4f4;
-    color: #000;
-    background-color: color-mix(in oklab, #f4f4f4, #ffe5eb var(--neuro-ask-ai-trace-strength, 0%));
-    color: color-mix(in oklab, #000, var(--ask-ai-trace-color) var(--neuro-ask-ai-trace-strength, 0%));
-    font: inherit;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 18px;
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  @property --neuro-ask-ai-trace-angle {
-    syntax: '<angle>';
-    inherits: false;
-    initial-value: 0deg;
-  }
-
-  @property --neuro-ask-ai-trace-strength {
-    syntax: '<percentage>';
-    inherits: true;
-    initial-value: 0%;
-  }
-
-  /* Border trace adapted from CodeFronts (MIT).
-     https://codefronts.com/components/css-glowing-border-buttons/pure-css-animated-border-trace-button/ */
-  .neuro-search__ask-ai::before,
-  .neuro-search__ask-ai::after {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    padding: 2px;
-    border-radius: inherit;
-    background: conic-gradient(from var(--neuro-ask-ai-trace-angle),
-      transparent 0 82%, color-mix(in oklab, var(--ask-ai-trace-color) 45%, transparent) 88%,
-      var(--ask-ai-trace-color) 93%, transparent 97%);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: var(--neuro-ask-ai-trace-strength, 0%);
-    pointer-events: none;
-  }
-
-  .neuro-search__ask-ai::after {
-    inset: -3px;
-    padding: 4px;
-    filter: blur(8px);
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    @supports ((mask-composite: exclude) or (-webkit-mask-composite: xor)) {
-      .neuro-search:not([hidden]) .neuro-search__ask-ai {
-        animation: neuro-ask-ai-trace-fade var(--ask-ai-trace-duration) ease-in-out var(--ask-ai-trace-delay) both;
-      }
-
-      .neuro-search:not([hidden]) .neuro-search__ask-ai::before,
-      .neuro-search:not([hidden]) .neuro-search__ask-ai::after {
-        animation: neuro-ask-ai-trace-lap var(--ask-ai-trace-lap) linear var(--ask-ai-trace-delay) 2;
-      }
-    }
-  }
-
-  @keyframes neuro-ask-ai-trace-lap {
-    to { --neuro-ask-ai-trace-angle: 360deg; }
-  }
-
-  @keyframes neuro-ask-ai-trace-fade {
-    from, to { --neuro-ask-ai-trace-strength: 0%; }
-    12%, 88% { --neuro-ask-ai-trace-strength: 100%; }
-  }
-
-  .neuro-search .field__icon--clickable:not([hidden]) {
-    display: grid;
-    place-items: center;
-    flex: none;
-    width: 22px;
-    height: 22px;
-    padding: 0;
-  }
-
-  .neuro-search .quick-search__dropdown {
-    --popover-top: calc(100% + 10px);
-  }
-
-  .neuro-search .popover__surface {
-    max-height: calc(100dvh - var(--layout-header-height) - 10px);
-    overflow-y: auto;
-    border-radius: 24px;
-  }
-
-  .neuro-search .quick-search-dropdown {
-    padding-bottom: 10px;
-  }
-
-  .neuro-search .quick-search-dropdown__heading {
-    padding-inline: 8px;
-  }
-
-  .neuro-search .quick-search-dropdown__list {
-    gap: 0;
-  }
-
-  .neuro-search .context-list-option {
-    width: 100%;
-    text-align: left;
-  }
-
-  .neuro-search .quick-search-dropdown__list .context-list-option {
-    --option-art-size: 20px;
-    --option-inner-gap: 12px;
-    --option-inner-offset-x: 8px;
-    --option-inner-offset-y: 8px;
-    border-radius: 18px;
-  }
-
-  .neuro-search .context-list-option:focus-visible {
-    background: var(--theme-color-popover-item-bg-active);
-  }
-
-  @media (max-width: 924px) {
-    .bar--top .header__main.quick-search-wrapper {
-      position: absolute;
-      inset: 0 16px;
-      display: flex;
-      align-items: center;
-      width: auto;
-      padding: 0;
-    }
-  }
-
-  @media (max-width: 639px) {
-    .bar--top .neuro-mobile-search {
-      display: flex;
-      grid-area: back;
-      justify-self: start;
-      width: 36px;
-      margin-left: 24px;
-    }
-  }
-
 
   .neuro-mobile-back,
   .neuro-mobile-open {
@@ -1587,16 +1395,20 @@
   <div id="neuro-search" class="quick-search neuro-search" role="dialog" aria-modal="true" aria-label="Поиск по vc.ru" hidden>
     <div class="quick-search__underlay" aria-hidden="true"></div>
     <div class="quick-search__container">
-      <form class="neuro-search__form" role="search" action="https://vc.ru/search/v2/content/relevant" method="get">
+      <div class="neuro-search__variant-switch" role="group" aria-label="Вариант поиска" data-search-variant-switch>
+        <button class="neuro-search__variant" type="button" aria-pressed="true" data-search-variant="1">Вариант 1</button>
+        <button class="neuro-search__variant" type="button" aria-pressed="false" data-search-variant="2">Вариант 2</button>
+      </div>
+      <form class="neuro-search__form" role="search" action="./vc-search-results.html" method="get">
         <div class="field field--large field--focused">
           <div class="field__wrapper">
             <div class="field__wrapper-body">
               <svg class="icon icon--search_enhanced field__icon field__icon--left" width="22" height="22" aria-hidden="true"><use href="#sprite-search_enhanced"></use></svg>
-              <input class="text-input" type="text" name="query" placeholder="Поиск" aria-label="Поиск" autocomplete="off" enterkeyhint="search">
+              <input class="text-input" type="text" name="q" placeholder="Поиск" aria-label="Поиск" autocomplete="off" enterkeyhint="search">
               <button class="field__icon field__icon--right field__icon--clickable" type="button" data-search-reset aria-label="Очистить поле поиска" hidden>
                 <svg class="icon icon--cross" width="22" height="22" aria-hidden="true"><use href="#sprite-cross"></use></svg>
               </button>
-              <button class="neuro-search__ask-ai" type="button" disabled>Спросить AI</button>
+              <button class="neuro-search__ask-ai" type="button" role="switch" aria-checked="false"><span class="neuro-search__ask-ai-label">Спросить AI</span></button>
             </div>
           </div>
         </div>
@@ -1781,87 +1593,8 @@
 
 
 
+<script src="./blocks/vc-quick-search.js"></script>
 <script id="feature-script">
-
-  const searchDialog = document.querySelector('#neuro-search');
-  const searchTriggers = document.querySelectorAll('[aria-controls="neuro-search"]');
-  const searchForm = searchDialog.querySelector('form');
-  const searchInput = searchForm.elements.query;
-  const searchReset = searchDialog.querySelector('[data-search-reset]');
-  const searchHistory = searchDialog.querySelector('[data-search-history]');
-  const searchClear = searchDialog.querySelector('[data-search-clear]');
-  const searchExample = searchDialog.querySelector('[data-search-example]');
-  const searchResults = searchDialog.querySelector('[data-search-results]');
-  const searchDropdown = searchDialog.querySelector('.quick-search__dropdown');
-  let searchOpener;
-  let searchHistoryCleared = false;
-
-  function updateSearch() {
-    const hasQuery = searchInput.value.trim() !== '';
-    searchReset.hidden = searchInput.value === '';
-    searchHistory.hidden = hasQuery || searchHistoryCleared;
-    searchResults.hidden = !hasQuery;
-    searchDropdown.hidden = searchHistory.hidden && searchResults.hidden;
-  }
-
-  function closeSearch() {
-    searchDialog.hidden = true;
-    searchDialog.parentElement.classList.remove('quick-search-wrapper');
-    searchOpener.setAttribute('aria-expanded', 'false');
-    searchOpener.focus();
-  }
-
-  for (const trigger of searchTriggers) {
-    trigger.addEventListener('click', () => {
-      searchOpener = trigger;
-      trigger.setAttribute('aria-expanded', 'true');
-      searchInput.value = '';
-      updateSearch();
-      searchDialog.parentElement.classList.add('quick-search-wrapper');
-      searchDialog.hidden = false;
-      searchInput.focus();
-    });
-  }
-
-  searchDialog.querySelector('.quick-search__underlay').addEventListener('click', closeSearch);
-  searchInput.addEventListener('input', updateSearch);
-  searchReset.addEventListener('click', () => {
-    searchInput.value = '';
-    updateSearch();
-    searchInput.focus();
-  });
-  searchClear.addEventListener('click', () => {
-    searchHistoryCleared = true;
-    updateSearch();
-    searchInput.focus();
-  });
-  searchExample.addEventListener('click', () => {
-    searchInput.value = searchExample.dataset.searchExample;
-    searchForm.requestSubmit();
-  });
-  searchForm.addEventListener('submit', event => {
-    searchInput.value = searchInput.value.trim();
-    if (!searchInput.value) {
-      event.preventDefault();
-      updateSearch();
-    }
-  });
-  searchDialog.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      closeSearch();
-    }
-
-    if (event.key === 'Tab') {
-      const controls = [...searchDialog.querySelectorAll('input:not(:disabled), button:not(:disabled)')]
-        .filter(control => !control.closest('[hidden]'));
-      const edge = event.shiftKey ? controls[0] : controls.at(-1);
-      if (document.activeElement === edge) {
-        event.preventDefault();
-        (event.shiftKey ? controls.at(-1) : controls[0]).focus();
-      }
-    }
-  });
 
   if (!CSS.supports('field-sizing', 'content')) {
     const input = document.querySelector('.neuro-compose__input');

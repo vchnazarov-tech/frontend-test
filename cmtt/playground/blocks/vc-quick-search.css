@@ -1,0 +1,321 @@
+  .neuro-mobile-search {
+    display: none;
+  }
+
+  .neuro-search[hidden],
+  .neuro-search [hidden] {
+    display: none;
+  }
+
+  .bar--top .header:has(.quick-search-wrapper) {
+    position: relative;
+    transform: none;
+  }
+
+  .neuro-search .quick-search__underlay {
+    inset: 0;
+  }
+
+  .neuro-search__variant-switch {
+    position: fixed;
+    z-index: calc(var(--layout-z-modal-overlay) + 1);
+    top: 16px;
+    right: 24px;
+    display: inline-flex;
+    gap: 2px;
+    padding: 4px;
+    border: 1px solid rgb(0 0 0 / 8%);
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+  }
+
+  .neuro-search__variant {
+    min-height: 30px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 999px;
+    color: #595959;
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+    line-height: 18px;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .neuro-search__variant[aria-pressed="true"] {
+    color: #000;
+    background: #f2f2f2;
+  }
+
+  .neuro-search__variant:focus-visible {
+    outline: 2px solid var(--theme-color-signal-active-default);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 639px) {
+    .neuro-search__variant-switch {
+      top: calc(var(--layout-header-height) + 12px);
+      right: 12px;
+    }
+  }
+
+  .neuro-search__form {
+    margin: 0;
+  }
+
+  .neuro-search .field {
+    --iconLeftMarginRight: 12px;
+  }
+
+  .neuro-search .field__wrapper {
+    border: 0;
+    border-radius: 24px;
+    padding-inline: 20px;
+  }
+
+  .neuro-search .text-input {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .neuro-search__ask-ai {
+    --ask-ai-trace-color: #e55c78;
+    --ask-ai-trace-lap: 1.4s;
+    --ask-ai-trace-delay: 300ms;
+    --ask-ai-background: #f4f4f4;
+    --ask-ai-text: #000;
+    position: relative;
+    isolation: isolate;
+    appearance: none;
+    flex: none;
+    min-width: 95px;
+    padding: 5px 10px;
+    border: 0;
+    border-radius: 999px;
+    box-shadow: none;
+    background: var(--ask-ai-background);
+    color: var(--ask-ai-text);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .neuro-search[data-search-variant="1"] .neuro-search__ask-ai[aria-checked="true"] {
+    --ask-ai-background: #ffe5eb;
+    --ask-ai-text: var(--ask-ai-trace-color);
+  }
+
+  .neuro-search__ask-ai[data-ask-ai-trace="enable"] {
+    --ask-ai-trace-delay: 0ms;
+    --ask-ai-trace-start-background: #f4f4f4;
+    --ask-ai-trace-start-text: #000;
+  }
+
+  .neuro-search[data-search-variant="2"] .neuro-search__ask-ai {
+    --ask-ai-toggle-travel: 18px;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    width: 110px;
+    min-width: 110px;
+    height: 28px;
+    padding: 2px;
+    border-radius: 999px;
+    background: #dedede;
+    transition: background-color 160ms ease;
+  }
+
+  .neuro-search[data-search-variant="2"] .neuro-search__ask-ai::before,
+  .neuro-search[data-search-variant="2"] .neuro-search__ask-ai::after {
+    display: none;
+  }
+
+  .neuro-search[data-search-variant="2"] .neuro-search__ask-ai-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    box-sizing: border-box;
+    width: calc(100% - var(--ask-ai-toggle-travel));
+    padding: 3px 6px;
+    border-radius: 999px;
+    color: #000;
+    background: #fff;
+    transform: translateX(0);
+    transition: transform 180ms ease, color 160ms ease;
+    pointer-events: none;
+  }
+
+  .neuro-search[data-search-variant="2"] .neuro-search__ask-ai[aria-checked="true"] {
+    background: #0b5dd7;
+  }
+
+  .neuro-search[data-search-variant="2"] .neuro-search__ask-ai[aria-checked="true"] .neuro-search__ask-ai-label {
+    color: #0b5dd7;
+    transform: translateX(var(--ask-ai-toggle-travel));
+  }
+
+  .neuro-search__ask-ai:focus-visible {
+    outline: 2px solid #0b5dd7;
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .neuro-search[data-search-variant="2"] .neuro-search__ask-ai,
+    .neuro-search[data-search-variant="2"] .neuro-search__ask-ai-label {
+      transition: none;
+    }
+  }
+
+  @property --neuro-ask-ai-trace-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @property --neuro-ask-ai-trace-strength {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 0%;
+  }
+
+  /* Border trace adapted from CodeFronts (MIT).
+     https://codefronts.com/components/css-glowing-border-buttons/pure-css-animated-border-trace-button/ */
+  .neuro-search__ask-ai::before,
+  .neuro-search__ask-ai::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    padding: 2px;
+    border-radius: inherit;
+    background: conic-gradient(from var(--neuro-ask-ai-trace-angle),
+      transparent 0 82%, color-mix(in oklab, var(--ask-ai-trace-color) 45%, transparent) 88%,
+      var(--ask-ai-trace-color) 93%, transparent 97%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: var(--neuro-ask-ai-trace-strength, 0%);
+    pointer-events: none;
+  }
+
+  .neuro-search__ask-ai::after {
+    inset: -3px;
+    padding: 4px;
+    filter: blur(8px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports ((mask-composite: exclude) or (-webkit-mask-composite: xor)) {
+      .neuro-search:not([hidden]) .neuro-search__ask-ai[data-ask-ai-trace] {
+        animation: neuro-ask-ai-trace-fade var(--ask-ai-trace-lap) ease-in-out var(--ask-ai-trace-delay) both;
+      }
+
+      .neuro-search:not([hidden]) .neuro-search__ask-ai[data-ask-ai-trace]::before,
+      .neuro-search:not([hidden]) .neuro-search__ask-ai[data-ask-ai-trace]::after {
+        animation: neuro-ask-ai-trace-lap var(--ask-ai-trace-lap) linear var(--ask-ai-trace-delay);
+      }
+    }
+  }
+
+  @keyframes neuro-ask-ai-trace-lap {
+    to { --neuro-ask-ai-trace-angle: 360deg; }
+  }
+
+  @keyframes neuro-ask-ai-trace-fade {
+    from {
+      --neuro-ask-ai-trace-strength: 0%;
+      background-color: var(--ask-ai-trace-start-background, var(--ask-ai-background));
+      color: var(--ask-ai-trace-start-text, var(--ask-ai-text));
+    }
+    12%, 88% {
+      --neuro-ask-ai-trace-strength: 100%;
+      background-color: #ffe5eb;
+      color: var(--ask-ai-trace-color);
+    }
+    to {
+      --neuro-ask-ai-trace-strength: 0%;
+      background-color: var(--ask-ai-background);
+      color: var(--ask-ai-text);
+    }
+  }
+
+  .neuro-search .field__icon--clickable:not([hidden]) {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+  }
+
+  .neuro-search[data-search-variant="2"] [data-search-reset]:not([hidden]) + .neuro-search__ask-ai {
+    margin-inline-start: 16px;
+  }
+
+  .neuro-search .quick-search__dropdown {
+    --popover-top: calc(100% + 10px);
+  }
+
+  .neuro-search .popover__surface {
+    max-height: calc(100dvh - var(--layout-header-height) - 10px);
+    overflow-y: auto;
+    border-radius: 24px;
+  }
+
+  .neuro-search .quick-search-dropdown {
+    padding-bottom: 10px;
+  }
+
+  .neuro-search .quick-search-dropdown__heading {
+    padding-inline: 8px;
+  }
+
+  .neuro-search .quick-search-dropdown__list {
+    gap: 0;
+  }
+
+  .neuro-search .context-list-option {
+    width: 100%;
+    text-align: left;
+  }
+
+  .neuro-search .quick-search-dropdown__list .context-list-option {
+    --option-art-size: 20px;
+    --option-inner-gap: 12px;
+    --option-inner-offset-x: 8px;
+    --option-inner-offset-y: 8px;
+    border-radius: 18px;
+  }
+
+  .neuro-search .context-list-option:focus-visible {
+    background: var(--theme-color-popover-item-bg-active);
+  }
+
+  @media (max-width: 924px) {
+    .bar--top .header__main.quick-search-wrapper {
+      position: absolute;
+      inset: 0 16px;
+      display: flex;
+      align-items: center;
+      width: auto;
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .bar--top .neuro-mobile-search {
+      display: flex;
+      grid-area: back;
+      justify-self: start;
+      width: 36px;
+      margin-left: 24px;
+    }
+  }
